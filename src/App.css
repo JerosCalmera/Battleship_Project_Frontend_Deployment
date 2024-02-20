@@ -1,0 +1,151 @@
+body {
+  background-color: black;
+  color: rgb(96, 193, 193);
+  background-image: url(assets/backround.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h2 {
+  padding-left: 14%;
+}
+
+
+.button {
+  background-color: rgba(0, 160, 157, 0.575);
+  color: rgb(0, 242, 255);
+  font-weight: bold;
+  text-decoration: none;
+  border-color: rgb(96, 218, 206);
+  border-style: solid;
+  height: 20px;
+  padding-bottom: 18px;
+}
+
+.button:hover {
+  color: rgb(0, 221, 255);
+  background-color: #ffffff;
+  transition: 0.2s;
+}
+
+.serverStatus {
+  position: fixed;
+}
+
+.startupOuter {
+  background-color: rgba(0, 0, 0, 0.708);
+  height: 150px;
+  width: 550px;
+  padding: 20px;
+  padding-bottom: 30px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.chatBox {
+  height: auto;
+  width: 560px;
+  line-height: 165%;
+  background-color: rgba(0, 0, 0, 0.708);
+  border-radius: 20px;
+  padding: 15px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding-bottom: 20px;
+  overflow-wrap: break-word;
+}
+
+.chatBoxOuter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.input {
+  background-color: rgba(116, 196, 194, 0.575);
+}
+
+.gameInfoOuter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gameInfo {
+  margin-top: 10px;
+  padding-top: 15px;
+  height: 120px;
+  width: 350px;
+  margin-bottom: 20px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.708);
+  border-radius: 20px;
+  padding: 15px;
+}
+
+.leaderBoard {
+  height: auto;
+  width: 500px;
+  line-height: 50%;
+  background-color: rgba(0, 0, 0, 0.708);
+  border-radius: 20px;
+  padding: 15px;
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.leaderBoardOuter {
+  margin-left: 600px;
+  margin-top: -636px;
+}
+
+.bugReportPageFade {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  margin-top: -2%;
+  margin-left: -2%;
+  padding-right: 2%;
+  padding-bottom: 2%;
+  background-color: rgba(59, 59, 59, 0.736);
+}
+
+.bugReportOuter {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+}
+
+.bugReport {
+  height: 100px;
+  width: 800px;
+  background-color: rgba(0, 0, 0, 0.888); 
+  border-radius: 20px;
+  padding: 40px;
+  padding-bottom: 60px;
+  text-align: center;
+  line-height: 165%;
+}
+
+.bugReportInputBox{
+  width: 800px;
+  background-color: rgba(116, 196, 194, 0.575);
+}
+
+.cancelBox {
+  display: flex;
+  align-items: right;
+  justify-content: right;
+}
