@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Grids from "../components/Grids";
 import StartUp from "../components/StartUp";
 
-
+//testing
 function GameBoard() {
     const BASE_URL = "https://solar-fury-backend-v1-a5761b56a343.herokuapp.com/"
 
