@@ -53,8 +53,9 @@ function GameBoard() {
 
 
     useEffect(() => {
-        const port = 8081;
-        const socket = new SockJS(`${BASE_URL}:${port}/game`);
+        // const port = 8081;
+        // const socket = new SockJS(`${BASE_URL}:${port}/game`);
+        const socket = new SockJS(`${BASE_URL}/game`);
         const client = Stomp.over(socket);
 
         client.connect({}, () => {
