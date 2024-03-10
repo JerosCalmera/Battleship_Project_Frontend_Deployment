@@ -143,7 +143,7 @@ function GameBoard() {
             client.subscribe("/topic/autoShoot", () => {
             });
 
-            client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${port}`));
+            client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${BASE_URL}`));
             setServerStatus(true);
 
             client.subscribe("/topic/gameUpdate", (message: any) => {
