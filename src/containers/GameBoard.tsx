@@ -8,7 +8,7 @@ import StartUp from "../components/StartUp";
 function GameBoard() {
     const BASE_URL = "https://solar-fury-backend-v1-a5761b56a343.herokuapp.com/"
 
-    const [stompClient, setStompClient] = useState<Stomp.Client>(Stomp.over(new SockJS(`${BASE_URL}:8081/game`)));
+    const [stompClient, setStompClient] = useState<Stomp.Client>(Stomp.over(new SockJS(`${BASE_URL}/game`)));
     const [serverStatus, setServerStatus] = useState(false)
     const [attemptReconnect, setAttemptReconnect] = useState(0)
     const [serverMessageLog, serverSetMessageLog] = useState("")
