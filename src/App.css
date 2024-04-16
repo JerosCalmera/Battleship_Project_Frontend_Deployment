@@ -111,10 +111,10 @@ h2 {
   position: fixed;
   height: 100%;
   width: 100%;
-  margin-top: -2%;
+  margin-top: -4%;
   margin-left: -2%;
   padding-right: 2%;
-  padding-bottom: 2%;
+  padding-bottom: 4%;
   background-color: rgba(59, 59, 59, 0.736);
 }
 
@@ -128,15 +128,47 @@ h2 {
   transform: translate(-50%, -50%);
 }
 
+
+.loadingOuter {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+}
+
+.loadingFlash {
+  height: 60px;
+  width: 350px;
+  padding-left: 40px;
+  background-color: rgba(0, 0, 0, 0.888); 
+  border-radius: 20px;
+}
+
 .bugReport {
-  height: 100px;
-  width: 800px;
   background-color: rgba(0, 0, 0, 0.888); 
   border-radius: 20px;
   padding: 40px;
   padding-bottom: 60px;
   text-align: center;
   line-height: 165%;
+}
+
+.gameFlash {
+  height: auto;
+  width: auto;
+  background-color: rgba(0, 0, 0, 0.888); 
+  border-radius: 20px;
+  padding: 40px;
+  padding-bottom: 40px;
+  text-align: center;
+  line-height: 165%;
+}
+
+.gameFlashBody {
+  text-align: left;
 }
 
 .bugReportInputBox{
