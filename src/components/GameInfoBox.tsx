@@ -1,0 +1,33 @@
+
+interface Props {
+    shipInfo: string;
+    shipDamage: string;
+    turn: string;
+    gameInfo: string;
+    turnNumber: number;
+    matchBegin: () => void;
+    randomPlacement: () => void;
+    matchStart: string;
+    player1Data: string
+}
+
+
+const GameInfoBox: React.FC<Props> = ({player1Data, turnNumber, turn, gameInfo, shipInfo, matchBegin, randomPlacement, matchStart}) => {
+
+
+    return (
+        <>
+            {player1Data.length > 1 ?
+            <div className="gameInfoOuter">
+                <div className="gameInfo">
+                    <h3>Turn: ({turnNumber}) {turn.includes("Computer") ? "Computer" : turn}</h3>
+                    <h3>{gameInfo}</h3>
+                    {shipInfo.length === 60 && matchStart.length > 1 ? <button onClick={matchBegin} className="button">Confirm Ready</button> : null}
+                    {shipInfo.length < 1 && matchStart.length > 2 ? <button onClick={randomPlacement} className="button">Random Ship Placement</button> : null}
+                </div>
+            </div> : null}
+        </>
+    )
+}
+
+export default GameInfoBox

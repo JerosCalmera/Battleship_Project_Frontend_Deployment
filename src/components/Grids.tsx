@@ -1,3 +1,4 @@
+import GameInfoBox from './GameInfoBox';
 import './Grids.css'
 import { useEffect, useState } from "react";
 
@@ -19,14 +20,11 @@ interface Props {
     turn: string;
     playerName: string;
     gameInfo: string;
-    serverMessageLog: string;
-    chat: string[];
     turnNumber: number;
     setPlacedShip: React.Dispatch<React.SetStateAction<string>>;
-    setChat: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const Grids: React.FC<Props> = ({ setChat, chat, gameInfo, serverMessageLog, turnNumber, playerName, turn, miss, enemyMiss, player2Name, placedShip, setPlacedShip, player1Data, player2Data, savedName, shipInfo, shipDamage, enemyShipDamage, stompClient }) => {
+const Grids: React.FC<Props> = ({gameInfo, turnNumber, playerName, turn, miss, enemyMiss, player2Name, placedShip, setPlacedShip, player1Data, player2Data, savedName, shipInfo, shipDamage, enemyShipDamage, stompClient }) => {
 
     const [shipPlacement, setShipPlacement] = useState<boolean>(false)
     const [placedReadyShip, setPlacedReadyShip] = useState<string>("")
@@ -140,6 +138,11 @@ const Grids: React.FC<Props> = ({ setChat, chat, gameInfo, serverMessageLog, tur
         return numbers
     }
 
+
+    const randomPlacement = () => {
+        stompClient.send("/app/randomPlacement", {}, JSON.stringify(savedName));
+    }
+
     const clickedCell = (value: string) => {
         if (shipPlacement === false) {
             if (carrier > 0 && shipToPlace === "Carrier" ||
@@ -162,14 +165,15 @@ const Grids: React.FC<Props> = ({ setChat, chat, gameInfo, serverMessageLog, tur
 
     const clickedEnemyCell = (value: string) => {
         if (shipPlacement === true) {
-            if (turn === savedName) {
-                if (enemyMiss.includes(value)) { null }
+            if (turn === playerName) {
+                if (enemyMiss.includes(value) || enemyShipDamage.includes(value)) { null }
                 else
                     stompClient.send("/app/gameData", {}, JSON.stringify(value + player2Name.slice(0, 4) + playerName));
 
             }
         }
     }
+    
     const placeCarrier = () => {
         setShipSize(5);
         setShipToPlace("Carrier")
@@ -190,34 +194,16 @@ const Grids: React.FC<Props> = ({ setChat, chat, gameInfo, serverMessageLog, tur
         setShipToPlace("Destroyer")
     }
 
-    const randomPlacement = () => {
-        if (chat.includes("Admin: A Game against the Computer has been selected") && !chat.includes("Admin: Computer player ready")){
-            setChat((chat) => {
-                const updatedChat = [...chat, "Admin: The computer player is still placing its ships, please wait and try again"];
-                return updatedChat.slice(-10);
-            });
-        }
-        else
-        stompClient.send("/app/randomPlacement", {}, JSON.stringify(savedName));
-    }
-
     const matchBegin = () => {
-        stompClient.send("/app/matchStart", {}, JSON.stringify("Match start"));
+        stompClient.send("/app/matchStart", {}, JSON.stringify(savedName));
         setMatchStart("")
         setShipPlacement(true)
     }
 
     return (
         <>
-            {serverMessageLog === "Server: Rooms synced" ?
-                <div className="gameInfoOuter">
-                    <div className="gameInfo">
-                        <h3>Turn: ({turnNumber}) {turn.includes("Computer") ? "Computer" : turn}</h3>
-                        <h3>{gameInfo}</h3>
-                        {shipInfo.length === 60 && matchStart.length > 1 ? <button onClick={matchBegin} className="button">Confirm Ready</button> : null}
-                        {shipInfo.length < 1 && matchStart.length > 2 ? <button onClick={randomPlacement} className="button">Random Ship Placement</button> : null}
-                    </div>
-                </div> : null}
+            <GameInfoBox player1Data={player1Data} shipInfo={shipInfo} shipDamage={shipDamage} turn={turn} gameInfo={gameInfo} turnNumber={turnNumber}
+            matchStart={matchStart} matchBegin={matchBegin} randomPlacement={randomPlacement}/>
             <div className="gameBoardOuterGreater">
                 <div className="gameBoardOuter">
                     <div className="shipPlacementOuter">
@@ -259,7 +245,7 @@ const Grids: React.FC<Props> = ({ setChat, chat, gameInfo, serverMessageLog, tur
                         </div>
                     </div>
                     <div className="gameBoardRender">
-                        <h2>{player1Data}</h2>
+                        <h2>{player1Data.includes("Computer") ? player1Data.includes(savedName) ? "Error": "Setting up...." : player1Data }</h2>
                         <ul>
                             {populateGrid()}
                             <button name="end" className="endCellCorner">*</button>
@@ -267,7 +253,7 @@ const Grids: React.FC<Props> = ({ setChat, chat, gameInfo, serverMessageLog, tur
                         </ul>
                     </div >
                     <div className="gameBoardRender2">
-                        <h2>{player2Data.includes("Computer") ? "Computer " : player2Data}</h2>
+                        <h2>{player2Data.includes("Computer") ? player2Data.includes(savedName) ? !player2Data.includes(savedName) ? player2Data : "Computer " : "Computer" : player2Data}</h2>
                         <ul>
                             {populateEnemyGrid()}
                             <button name="end" className="endCellCorner">*</button>
