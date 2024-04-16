@@ -480,7 +480,7 @@ function GameBoard() {
             <div className={serverStatusStyle()}>
                 {serverStatus == true ? <h5>Connected to game server</h5> :
                     <>
-                        <h5>Not connected to game server</h5><LoadingSplash attemptReconnect={attemptReconnect} setAttemptReconnect={setAttemptReconnect}/>
+                        <h5>Not connected to game server</h5><LoadingSplash setAttemptReconnect={setAttemptReconnect}/>
                         <button className="button" onClick={() => setAttemptReconnect(attemptReconnect + 1)}>Reconnect</button></>
                 }
                 <h5>{serverMessageLog}</h5>
@@ -503,7 +503,7 @@ function GameBoard() {
                             stompClient={stompClient} />
                     </div> : null}
 
-            <StartUp player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hidden={hidden} chatEntry={chatEntry} ready={ready} savedName={savedName} serverMessageLog={serverMessageLog} password={password}
+            <StartUp player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hidden={hidden} chatEntry={chatEntry} ready={ready} password={password}
                 setPassword={setPassword} auth={auth} generate={generate} playerName={playerName} chat={chat}
                 saveName={saveName} chatSend={chatSend} setPlayerName={setPlayerName} setChatEntry={setChatEntry}
                 leaderBoard={leaderBoard} />

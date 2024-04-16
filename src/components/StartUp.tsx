@@ -2,8 +2,6 @@
 interface Props {
     setPlayerName: React.Dispatch<React.SetStateAction<string>>;
     saveName: React.MouseEventHandler<HTMLButtonElement>;
-    savedName: string;
-    serverMessageLog: string;
     password: string;
     setPassword: React.Dispatch<React.SetStateAction<string>>;
     auth: () => void;
@@ -22,7 +20,7 @@ interface Props {
     player1Data: string;
 }
 
-const StartUp: React.FC<Props> = ({ player1Data, nameValidated, roomNumberSave, hidden, playVsComputer, chatEntry, setPlayerName, saveName, savedName, serverMessageLog, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
+const StartUp: React.FC<Props> = ({ player1Data, nameValidated, roomNumberSave, hidden, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
 
     const chatBox = () => {
         if (player1Data != "Player 1")
