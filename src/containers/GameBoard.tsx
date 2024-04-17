@@ -340,7 +340,7 @@ function GameBoard() {
         if (message.body.slice(12, 16).includes(chatTokenStorageSave)){
             return;
         }
-        let newMessage: string = message.body.slice(20, -2);
+        let newMessage: string = message.body.slice(16, -2);
         if (gameFlashSave.current === 1) {
             setChat((prevChat) => {
             const updatedChat = [...prevChat, newMessage];
