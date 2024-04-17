@@ -58,7 +58,7 @@ function GameBoard() {
     const [startUpFlash, setStartUpFlash] = useState<number>(1)
     const [gameFlash, setGameFlash] = useState<number>(1)
 
-    const [chatTokenStorage, setChatTokenStorage] = useState<string>("")
+    const [chatTokenStorage, setChatTokenStorage] = useState<string>("empty")
 
     useEffect(() => {
         const socket = new SockJS(`${BASE_URL}/game`);
@@ -337,7 +337,7 @@ function GameBoard() {
     }
         
     const globalChatParse = (message: any) => {
-        if (message.includes(chatTokenStorageSave)){
+        if (message.body.slice(12, 16).includes(chatTokenStorageSave)){
             return;
         }
         let newMessage: string = message.body.slice(20, -2);
