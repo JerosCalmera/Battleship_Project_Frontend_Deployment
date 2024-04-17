@@ -58,6 +58,8 @@ function GameBoard() {
     const [startUpFlash, setStartUpFlash] = useState<number>(1)
     const [gameFlash, setGameFlash] = useState<number>(1)
 
+    const [chatTokenStorage, setChatTokenStorage] = useState<string>("")
+
     useEffect(() => {
         const socket = new SockJS(`${BASE_URL}/game`);
         const client = Stomp.over(socket);
@@ -250,6 +252,12 @@ function GameBoard() {
     const player2NameSave = useRef(savedName);
 
     useEffect(() => {
+        chatTokenStorageSave.current = chatTokenStorage
+    }, [chat]);
+
+    const chatTokenStorageSave = useRef(chatTokenStorage);
+
+    useEffect(() => {
         player2NameSave.current = player2Name
     }, [player2Name]);
 
@@ -314,7 +322,10 @@ function GameBoard() {
     }
 
     const chatParse = (message: any) => {
-        let newMessage: string = message.body.slice(12, -2);
+        if (message.includes(chatTokenStorageSave)){
+            return;
+        }
+        let newMessage: string = message.body.slice(16, -2);
         if (newMessage.includes(roomNumberSave.current) && roomNumberSave.current.length > 0) {
             newMessage = message.body.slice(16, -2);
             setChat((prevChat) => {
@@ -322,16 +333,21 @@ function GameBoard() {
             return updatedChat.slice(-10);
             });
         };
+        setChatTokenStorage(message.body.slice(12, 16));
     }
         
     const globalChatParse = (message: any) => {
-        let newMessage: string = message.body.slice(12, -2);
+        if (message.includes(chatTokenStorageSave)){
+            return;
+        }
+        let newMessage: string = message.body.slice(20, -2);
         if (gameFlashSave.current === 1) {
             setChat((prevChat) => {
             const updatedChat = [...prevChat, newMessage];
             return updatedChat.slice(-10);
         });
         };
+        setChatTokenStorage(message.body.slice(12, 16));
     }
 
     const restart = () => {
