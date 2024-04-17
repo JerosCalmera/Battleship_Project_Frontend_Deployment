@@ -184,7 +184,7 @@ function GameBoard() {
             };
             setStompClient(client)
         });
-    }, [attemptReconnect])
+    }, [])
 
     useEffect(() => {
         setTurnNumber(turnNumber + 1)
@@ -323,7 +323,6 @@ function GameBoard() {
 
     const chatParse = (message: any) => {
         if (message === (chatStorageSave)){
-            console.log("discarding");
             return;
         }
         let newMessage: string = message.body.slice(16, -2);
@@ -340,7 +339,6 @@ function GameBoard() {
         
     const globalChatParse = (message: any) => {
         if (message === (chatStorageSave)){
-            console.log("discarding");
             return;
         }
         let newMessage: string = message.body.slice(16, -2);
