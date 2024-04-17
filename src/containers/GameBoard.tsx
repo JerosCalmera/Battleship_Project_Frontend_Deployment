@@ -333,7 +333,8 @@ function GameBoard() {
             return updatedChat.slice(-10);
             });
         };
-        setChatStorage(message);
+        setTimeout(() => {setChatStorage(message);
+        }, 50);
     }
         
     const globalChatParse = (message: any) => {
@@ -347,7 +348,8 @@ function GameBoard() {
             return updatedChat.slice(-10);
         });
         };
-        setChatStorage(message);
+        setTimeout(() => {setChatStorage(message);
+        }, 50);
     }
 
     const restart = () => {
