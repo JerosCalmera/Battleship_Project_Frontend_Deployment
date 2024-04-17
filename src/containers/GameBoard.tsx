@@ -327,7 +327,7 @@ function GameBoard() {
         }
         let newMessage: string = message.body.slice(16, -2);
         if (newMessage.includes(roomNumberSave.current) && roomNumberSave.current.length > 0) {
-            newMessage = message.body.slice(16, -2);
+            newMessage = message.body.slice(20, -2);
             setChat((prevChat) => {
             const updatedChat = [...prevChat, newMessage];
             return updatedChat.slice(-10);
