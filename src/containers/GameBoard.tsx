@@ -185,7 +185,7 @@ function GameBoard() {
             };
             setStompClient(client)
         });
-    }, [loading])
+    }, [setLoading])
 
     useEffect(() => {
         setTurnNumber(turnNumber + 1)
