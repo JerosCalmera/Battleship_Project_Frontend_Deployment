@@ -60,6 +60,10 @@ function GameBoard() {
 
     const [chatStorage, setChatStorage] = useState<string>("empty")
 
+    const handleReconnect = () => {
+        setAttemptReconnect(attemptReconnect + 1)
+    }
+
     useEffect(() => {
         const socket = new SockJS(`${BASE_URL}/game`);
         const client = Stomp.over(socket);
@@ -184,7 +188,7 @@ function GameBoard() {
             };
             setStompClient(client)
         });
-    }, [attemptReconnect, serverStatus])
+    }, [handleReconnect])
 
     useEffect(() => {
         setTurnNumber(turnNumber + 1)
@@ -498,7 +502,7 @@ function GameBoard() {
             <div className={serverStatusStyle()}>
                 {serverStatus == true ? <h5>Connected to game server</h5> :
                     <>
-                        <h5>Not connected to game server</h5><LoadingSplash attemptReconnect={attemptReconnect} setAttemptReconnect={setAttemptReconnect}/>
+                        <h5>Not connected to game server</h5><LoadingSplash handReconnect={handleReconnect}/>
                         <button className="button" onClick={() => setAttemptReconnect(attemptReconnect + 1)}>Reconnect</button></>
                 }
                 <h5>{serverMessageLog}</h5>
