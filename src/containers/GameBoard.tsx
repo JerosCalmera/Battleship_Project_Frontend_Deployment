@@ -61,130 +61,132 @@ function GameBoard() {
     const [chatStorage, setChatStorage] = useState<string>("empty")
 
     useEffect(() => {
-        const socket = new SockJS(`${BASE_URL}/game`);
-        const client = Stomp.over(socket);
+    webSocketConnect()
+    }, [])
 
-        client.connect({}, () => {
-            console.log("Connected to server");
-            client.subscribe("/topic/connect", (message: any) => {
-                serverSetMessageLog(message.body.slice(12, -2))
-            });
-            client.subscribe("/topic/hidden", (message: any) => {
-                hiddenParse(message.body.slice(12, -2));
-            });
-            client.subscribe("/topic/nameValidated", (message: any) => {
-                nameValidation(message.body.slice(12, -2));
-            });
-            client.subscribe("/topic/gameInfo", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setGameInfo(message.body.slice(16, -2))}
-            });
-            client.subscribe("/topic/gameData", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setCellStorage(message.body.slice(16, -2))}
-            });
+    const webSocketConnect = () => {        const socket = new SockJS(`${BASE_URL}/game`);
+    const client = Stomp.over(socket);
 
-            client.subscribe("/topic/turn", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setTurn(message.body.slice(16, -2))}
-            });
-            client.subscribe("/topic/gameData2", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setShipDamage(message.body.slice(16, -2))}
-            });
-            client.subscribe("/topic/placement", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setShipDamage(message.body.slice(16, -2))}
-            });
-            client.subscribe("/topic/miss", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setMissCheck(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/chat", (message: any) => {
-                chatParse(message)
-                });
-
-            client.subscribe("/topic/globalChat", (message: any) => {
-                globalChatParse(message)
-                });
-
-            client.subscribe("/topic/playerData1", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setPlayer1Data(message.body.slice(16, -2))}
-            })
-            client.subscribe("/topic/playerData2", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setPlayer2Data(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/computer", () => {
-            });
-
-            client.subscribe("/topic/randomPlacement", () => {
-            });
-
-            client.subscribe("/topic/leaderBoard", (message: any) => {
-                const leaderBoardEntry: string = message.body.slice(12, -2)
-                if (!leaderBoardSave.current.includes(leaderBoardEntry)) {
-                setLeaderBoard((prevLeader) => {
-                    const updatedLeader = [...prevLeader, leaderBoardEntry];
-                    return updatedLeader.slice(-10)
-                })
-            }}
-            );
-
-            client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${BASE_URL}`));
-            setServerStatus(true);
-
-            client.subscribe("/topic/gameUpdate", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setPlayer1Data(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/enemyDamage", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setDamageCheck(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/startup", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setPlayer1Data(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/placement2", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setPlacedShip(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/winner", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setWinner(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/bugReport", () => {
-            });
-
-            client.ws.onclose = () => {
-                (console.log("Connection terminated"))
-                setServerStatus(false)
-            };
-            setStompClient(client)
+    client.connect({}, () => {
+        console.log("Connected to server");
+        client.subscribe("/topic/connect", (message: any) => {
+            serverSetMessageLog(message.body.slice(12, -2))
         });
-    }, [attemptReconnect])
+        client.subscribe("/topic/hidden", (message: any) => {
+            hiddenParse(message.body.slice(12, -2));
+        });
+        client.subscribe("/topic/nameValidated", (message: any) => {
+            nameValidation(message.body.slice(12, -2));
+        });
+        client.subscribe("/topic/gameInfo", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setGameInfo(message.body.slice(16, -2))}
+        });
+        client.subscribe("/topic/gameData", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setCellStorage(message.body.slice(16, -2))}
+        });
+
+        client.subscribe("/topic/turn", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setTurn(message.body.slice(16, -2))}
+        });
+        client.subscribe("/topic/gameData2", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setShipDamage(message.body.slice(16, -2))}
+        });
+        client.subscribe("/topic/placement", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setShipDamage(message.body.slice(16, -2))}
+        });
+        client.subscribe("/topic/miss", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setMissCheck(message.body.slice(16, -2))}
+        });
+
+        client.subscribe("/topic/chat", (message: any) => {
+            chatParse(message)
+            });
+
+        client.subscribe("/topic/globalChat", (message: any) => {
+            globalChatParse(message)
+            });
+
+        client.subscribe("/topic/playerData1", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setPlayer1Data(message.body.slice(16, -2))}
+        })
+        client.subscribe("/topic/playerData2", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setPlayer2Data(message.body.slice(16, -2))}
+        });
+
+        client.subscribe("/topic/computer", () => {
+        });
+
+        client.subscribe("/topic/randomPlacement", () => {
+        });
+
+        client.subscribe("/topic/leaderBoard", (message: any) => {
+            const leaderBoardEntry: string = message.body.slice(12, -2)
+            if (!leaderBoardSave.current.includes(leaderBoardEntry)) {
+            setLeaderBoard((prevLeader) => {
+                const updatedLeader = [...prevLeader, leaderBoardEntry];
+                return updatedLeader.slice(-10)
+            })
+        }}
+        );
+
+        client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${BASE_URL}`));
+        setServerStatus(true);
+
+        client.subscribe("/topic/gameUpdate", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setPlayer1Data(message.body.slice(16, -2))}
+        });
+
+        client.subscribe("/topic/enemyDamage", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setDamageCheck(message.body.slice(16, -2))}
+        });
+
+        client.subscribe("/topic/startup", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setPlayer1Data(message.body.slice(16, -2))}
+        });
+
+        client.subscribe("/topic/placement2", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setPlacedShip(message.body.slice(16, -2))}
+        });
+
+        client.subscribe("/topic/winner", (message: any) => {
+            const newMessage: string = message.body.slice(12, -2)
+            if (newMessage.includes(roomNumberSave.current)) {
+            setWinner(message.body.slice(16, -2))}
+        });
+
+        client.subscribe("/topic/bugReport", () => {
+        });
+
+        client.ws.onclose = () => {
+            (console.log("Connection terminated"))
+            setServerStatus(false)
+        };
+        setStompClient(client)
+    });}
 
     useEffect(() => {
         setTurnNumber(turnNumber + 1)
@@ -498,8 +500,8 @@ function GameBoard() {
             <div className={serverStatusStyle()}>
                 {serverStatus == true ? <h5>Connected to game server</h5> :
                     <>
-                        <h5>Not connected to game server</h5><LoadingSplash setAttemptReconnect={setAttemptReconnect}/>
-                        <button className="button" onClick={() => setAttemptReconnect(attemptReconnect + 1)}>Reconnect</button></>
+                        <h5>Not connected to game server</h5><LoadingSplash webSocketConnect={webSocketConnect}/>
+                        <button className="button" onClick={() => webSocketConnect()}>Reconnect</button></>
                 }
                 <h5>{serverMessageLog}</h5>
                 <button className="button" onClick={restart}>Restart</button>
