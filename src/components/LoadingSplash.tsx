@@ -14,7 +14,6 @@ const LoadingSplash: React.FC<Props> = ({ attemptReconnect, setAttemptReconnect 
             setLoading(prevText => {
                 const points = prevText.length >= 30 ? "Connecting to game server" : prevText + ".";
                 setAttemptReconnect(attemptReconnect + 1)
-                console.log("Attempting reconnect")
                 return points
             });
     }, 500);

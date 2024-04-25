@@ -184,7 +184,7 @@ function GameBoard() {
             };
             setStompClient(client)
         });
-    }, [attemptReconnect])
+    }, [attemptReconnect, serverStatus])
 
     useEffect(() => {
         setTurnNumber(turnNumber + 1)
