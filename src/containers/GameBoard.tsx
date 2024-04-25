@@ -60,8 +60,9 @@ function GameBoard() {
     const [chatStorage, setChatStorage] = useState<string>("empty")
 
     useEffect(() => {
+    if (serverStatus == false) {
     webSocketConnect()
-    }, [])
+    }}, [])
 
     const webSocketConnect = () => {        
     const socket = new SockJS(`${BASE_URL}/game`);
