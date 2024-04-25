@@ -188,7 +188,7 @@ function GameBoard() {
             };
             setStompClient(client)
         });
-    }, [handleReconnect])
+    }, [attemptReconnect])
 
     useEffect(() => {
         setTurnNumber(turnNumber + 1)
@@ -503,7 +503,7 @@ function GameBoard() {
                 {serverStatus == true ? <h5>Connected to game server</h5> :
                     <>
                         <h5>Not connected to game server</h5><LoadingSplash handReconnect={handleReconnect}/>
-                        <button className="button" onClick={() => setAttemptReconnect(attemptReconnect + 1)}>Reconnect</button></>
+                        <button className="button" onClick={() => handleReconnect()}>Reconnect</button></>
                 }
                 <h5>{serverMessageLog}</h5>
                 <button className="button" onClick={restart}>Restart</button>
