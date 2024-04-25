@@ -67,7 +67,8 @@ function GameBoard() {
         client.connect({}, () => {
             console.log("Connected to server");
             client.subscribe("/topic/connect", (message: any) => {
-                serverSetMessageLog(message.body.slice(12, -2))
+                serverSetMessageLog(message.body.slice(12, -2));
+                setServerStatus(true)
             });
             client.subscribe("/topic/hidden", (message: any) => {
                 hiddenParse(message.body.slice(12, -2));
@@ -143,7 +144,6 @@ function GameBoard() {
             );
 
             client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${BASE_URL}`));
-            setServerStatus(true);
 
             client.subscribe("/topic/gameUpdate", (message: any) => {
                 const newMessage: string = message.body.slice(12, -2)
