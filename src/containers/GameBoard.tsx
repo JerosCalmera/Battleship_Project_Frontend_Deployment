@@ -63,7 +63,8 @@ function GameBoard() {
     webSocketConnect()
     }, [])
 
-    const webSocketConnect = () => {        const socket = new SockJS(`${BASE_URL}/game`);
+    const webSocketConnect = () => {        
+    const socket = new SockJS(`${BASE_URL}/game`);
     const client = Stomp.over(socket);
 
     client.connect({}, () => {
@@ -185,6 +186,7 @@ function GameBoard() {
             setServerStatus(false)
         };
         setStompClient(client)
+        console.log("Connected to websockets")
     });}
 
     useEffect(() => {
