@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react"
 
 interface Props {
-    // setAttemptReconnect: React.Dispatch<React.SetStateAction<number>>;
-    webSocketConnect: () => void; 
+    setAttemptReconnect: React.Dispatch<React.SetStateAction<number>>;
 }
 
 
-const LoadingSplash: React.FC<Props> = ({ webSocketConnect }) => {
+const LoadingSplash: React.FC<Props> = ({ setAttemptReconnect }) => {
     const [loading, setLoading] = useState<string>("Connecting to game server");
 
     useEffect(() => {
         const interval = setInterval(() => {
             setLoading(prevText => {
                 const points = prevText.length >= 30 ? "Connecting to game server" : prevText + ".";
-                webSocketConnect()
+                const counter = 0
+                setAttemptReconnect(counter + 1)
                 return points
             });
     }, 500);
