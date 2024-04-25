@@ -11,7 +11,6 @@ function GameBoard() {
 
     const [stompClient, setStompClient] = useState<Stomp.Client>(Stomp.over(new SockJS(`${BASE_URL}/game`)));
     const [serverStatus, setServerStatus] = useState(false)
-    const [attemptReconnect, setAttemptReconnect] = useState(0)
     const [serverMessageLog, serverSetMessageLog] = useState("")
     const [hidden, setHidden] = useState("")
 
