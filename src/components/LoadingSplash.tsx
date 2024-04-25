@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react"
 
 interface Props {
-    handReconnect: () => void;
+
 }
 
 
-const LoadingSplash: React.FC<Props> = ({ handReconnect }) => {
+const LoadingSplash: React.FC<Props> = ({}) => {
     const [loading, setLoading] = useState<string>("Connecting to game server");
 
     useEffect(() => {
         const interval = setInterval(() => {
             setLoading(prevText => {
                 const points = prevText.length >= 30 ? "Connecting to game server" : prevText + ".";
-                handReconnect()
                 return points
             });
     }, 500);

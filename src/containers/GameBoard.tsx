@@ -60,16 +60,16 @@ function GameBoard() {
 
     const [chatStorage, setChatStorage] = useState<string>("empty")
 
-    const handleReconnect = () => {
-        setAttemptReconnect(attemptReconnect + 1)
-    }
-
     useEffect(() => {
+        const connectToWebSocket = () => {
         const socket = new SockJS(`${BASE_URL}/game`);
         const client = Stomp.over(socket);
 
         client.connect({}, () => {
             console.log("Connected to server");
+            setServerStatus(true)
+            setStompClient(client);
+
             client.subscribe("/topic/connect", (message: any) => {
                 serverSetMessageLog(message.body.slice(12, -2));
                 setServerStatus(true)
@@ -147,8 +147,6 @@ function GameBoard() {
             }}
             );
 
-            client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${BASE_URL}`));
-
             client.subscribe("/topic/gameUpdate", (message: any) => {
                 const newMessage: string = message.body.slice(12, -2)
                 if (newMessage.includes(roomNumberSave.current)) {
@@ -181,14 +179,34 @@ function GameBoard() {
 
             client.subscribe("/topic/bugReport", () => {
             });
+            
+            client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${BASE_URL}`));
+
+        }, (error) => {
+            console.error("Connection failed, reconnecting.....", error)
+            setServerStatus(false);
+            setTimeout(connectToWebSocket, 1000);
+        });
 
             client.ws.onclose = () => {
                 (console.log("Connection terminated"))
-                setServerStatus(false)
+                setServerStatus(false);
+                setTimeout(connectToWebSocket, 1000);
             };
             setStompClient(client)
-        });
-    }, [attemptReconnect])
+        };
+
+        connectToWebSocket();
+        
+        return () => {
+            if (stompClient) {
+                stompClient.disconnect(() => {
+                console.log("Websocket connection closed");
+                });
+                setServerStatus(false)
+            }
+        }
+    }, [])
 
     useEffect(() => {
         setTurnNumber(turnNumber + 1)
@@ -502,8 +520,8 @@ function GameBoard() {
             <div className={serverStatusStyle()}>
                 {serverStatus == true ? <h5>Connected to game server</h5> :
                     <>
-                        <h5>Not connected to game server</h5><LoadingSplash handReconnect={handleReconnect}/>
-                        <button className="button" onClick={() => handleReconnect()}>Reconnect</button></>
+                        <h5>Not connected to game server</h5><LoadingSplash />
+                        <button className="button" onClick={() => setAttemptReconnect(attemptReconnect + 1)}>Reconnect</button></>
                 }
                 <h5>{serverMessageLog}</h5>
                 <button className="button" onClick={restart}>Restart</button>
