@@ -183,9 +183,9 @@ function GameBoard() {
             client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${BASE_URL}`));
 
         }, (error) => {
-            console.error("Connection failed, reconnecting.....", error)
-            setServerStatus(false);
-            setTimeout(connectToWebSocket, 1000);
+                console.error("Connection failed, reconnecting....", error)
+                setServerStatus(false);
+                setTimeout(connectToWebSocket, 1000);
         });
 
             client.ws.onclose = () => {
@@ -197,11 +197,11 @@ function GameBoard() {
         };
 
         connectToWebSocket();
-        
+
         return () => {
             if (stompClient) {
                 stompClient.disconnect(() => {
-                console.log("Websocket connection closed");
+                console.log("Connection terminated");
                 });
                 setServerStatus(false)
             }
