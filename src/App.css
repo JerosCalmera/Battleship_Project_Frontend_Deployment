@@ -2,7 +2,7 @@ body {
   background-color: black;
   color: rgb(96, 193, 193);
   background-image: url(assets/backround.jpg);
-  background-size: contain;
+  background-size: cover;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
