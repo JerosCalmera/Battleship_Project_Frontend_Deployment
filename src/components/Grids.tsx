@@ -22,10 +22,10 @@ interface Props {
     gameInfo: string;
     turnNumber: number;
     setPlacedShip: React.Dispatch<React.SetStateAction<string>>;
-    enemyShipsRemaining: number;
+    enemyShipsRemainingSave: any;
 }
 
-const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, playerName, turn, miss, enemyMiss, player2Name, placedShip, setPlacedShip, player1Data, player2Data, savedName, shipInfo, shipDamage, enemyShipDamage, stompClient }) => {
+const Grids: React.FC<Props> = ({enemyShipsRemainingSave, gameInfo, turnNumber, playerName, turn, miss, enemyMiss, player2Name, placedShip, setPlacedShip, player1Data, player2Data, savedName, shipInfo, shipDamage, enemyShipDamage, stompClient }) => {
 
     const [shipPlacement, setShipPlacement] = useState<boolean>(false)
     const [placedReadyShip, setPlacedReadyShip] = useState<string>("")
@@ -203,7 +203,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
 
     return (
         <>
-            <GameInfoBox enemyShipsRemaining={enemyShipsRemaining} player1Data={player1Data} shipInfo={shipInfo} shipDamage={shipDamage} turn={turn} gameInfo={gameInfo} turnNumber={turnNumber}
+            <GameInfoBox enemyShipsRemainingSave={enemyShipsRemainingSave} player1Data={player1Data} shipInfo={shipInfo} shipDamage={shipDamage} turn={turn} gameInfo={gameInfo} turnNumber={turnNumber}
             matchStart={matchStart} matchBegin={matchBegin} randomPlacement={randomPlacement}/>
             <div className="gameBoardOuterGreater">
                 <div className="gameBoardOuter">

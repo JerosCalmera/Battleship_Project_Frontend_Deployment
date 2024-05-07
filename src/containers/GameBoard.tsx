@@ -250,35 +250,41 @@ function GameBoard() {
 
     const gameFlashSave = useRef(gameFlash);
 
+    const roomNumberSave = useRef(passwordEntry);
+
+    const enemyShipsRemainingSave = useRef(enemyShipsRemaining);
+
+    const leaderBoardSave = useRef(leaderBoard);
+
+    const playerNameSave = useRef(savedName);
+
+    const player2NameSave = useRef(savedName);
+
+    const chatStorageSave = useRef(chatStorage);
+
     useEffect(() => {
         gameFlashSave.current = gameFlash
     }, [chat]);
-
-    const roomNumberSave = useRef(passwordEntry);
 
     useEffect(() => {
         leaderBoardSave.current = leaderBoard
     }, [serverMessageLog, leaderBoard]);
 
-    const leaderBoardSave = useRef(leaderBoard);
-
     useEffect(() => {
         roomNumberSave.current = passwordEntry
     }, [turnNumber, chat, serverMessageLog, hidden]);
-
-    const playerNameSave = useRef(savedName);
 
     useEffect(() => {
         playerNameSave.current = savedName
     }, [playerName, savedName]);
 
-    const player2NameSave = useRef(savedName);
-
     useEffect(() => {
         chatStorageSave.current = chatStorage
     }, [chat]);
 
-    const chatStorageSave = useRef(chatStorage);
+    useEffect(() => {
+        enemyShipsRemainingSave.current = enemyShipsRemaining
+    }, [chat]);
 
     useEffect(() => {
         player2NameSave.current = player2Name
@@ -539,7 +545,7 @@ function GameBoard() {
                     <div>
                         {gameFlash === 1 ? gameFlashRender() : null}
                         {winner != "unknown" ? gameEndRender() : null}
-                        <Grids enemyShipsRemaining={enemyShipsRemaining} gameInfo={gameInfo} turnNumber={turnNumber} playerName={playerName} turn={turn} miss={miss} enemyMiss={enemyMiss} player2Name={player2Name}
+                        <Grids enemyShipsRemainingSave={enemyShipsRemainingSave} gameInfo={gameInfo} turnNumber={turnNumber} playerName={playerName} turn={turn} miss={miss} enemyMiss={enemyMiss} player2Name={player2Name}
                             placedShip={placedShip} player1Data={player1Data} setPlacedShip={setPlacedShip}
                             player2Data={player2Data} savedName={savedName} shipInfo={shipInfo}
                             shipDamage={shipDamage} enemyShipDamage={enemyShipDamage}

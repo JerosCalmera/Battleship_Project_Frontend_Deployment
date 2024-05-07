@@ -84,6 +84,7 @@ body {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.708);
   border-radius: 20px;
+  line-height: 140%;
 }
 
 .leaderBoard {

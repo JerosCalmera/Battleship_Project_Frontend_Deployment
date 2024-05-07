@@ -9,11 +9,11 @@ interface Props {
     randomPlacement: () => void;
     matchStart: string;
     player1Data: string
-    enemyShipsRemaining: number;
+    enemyShipsRemainingSave: any;
 }
 
 
-const GameInfoBox: React.FC<Props> = ({enemyShipsRemaining, player1Data, turnNumber, turn, gameInfo, shipInfo, matchBegin, randomPlacement, matchStart}) => {
+const GameInfoBox: React.FC<Props> = ({enemyShipsRemainingSave, player1Data, turnNumber, turn, gameInfo, shipInfo, matchBegin, randomPlacement, matchStart}) => {
 
 
     return (
@@ -26,7 +26,7 @@ const GameInfoBox: React.FC<Props> = ({enemyShipsRemaining, player1Data, turnNum
                     {shipInfo.length === 60 && matchStart.length > 1 ? <button onClick={matchBegin} className="button">Confirm Ready</button> : null}
                     {shipInfo.length > 1 && shipInfo.length < 60 ? <h4>Placing ships...</h4> : null}
                     {shipInfo.length < 1 && matchStart.length > 2 ? <button onClick={randomPlacement} className="button">Random Ship Placement</button> : null}
-                    <h4>Enemy Ships remaining: {enemyShipsRemaining} "Test"</h4>
+                    <h4>Enemy Ships remaining: {enemyShipsRemainingSave}</h4>
                 </div>
             </div> : null}
         </>
