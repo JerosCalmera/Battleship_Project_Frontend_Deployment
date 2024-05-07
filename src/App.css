@@ -79,14 +79,14 @@ body {
 
 .gameInfo {
   height: 145px;
-  width: 325px;
+  width: 330px;
   margin-bottom: 5px;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.708);
   border-radius: 20px;
   text-align: left;
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .centre {
