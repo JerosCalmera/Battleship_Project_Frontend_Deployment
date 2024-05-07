@@ -252,7 +252,7 @@ function GameBoard() {
 
     const roomNumberSave = useRef(passwordEntry);
 
-    const enemyShipsRemainingSave = useRef(enemyShipsRemaining);
+    // const enemyShipsRemainingSave = useRef(enemyShipsRemaining);
 
     const leaderBoardSave = useRef(leaderBoard);
 
@@ -282,9 +282,9 @@ function GameBoard() {
         chatStorageSave.current = chatStorage
     }, [chat]);
 
-    useEffect(() => {
-        enemyShipsRemainingSave.current = enemyShipsRemaining
-    }, [chat]);
+    // useEffect(() => {
+    //     enemyShipsRemainingSave.current = enemyShipsRemaining
+    // }, [chat]);
 
     useEffect(() => {
         player2NameSave.current = player2Name
@@ -545,7 +545,7 @@ function GameBoard() {
                     <div>
                         {gameFlash === 1 ? gameFlashRender() : null}
                         {winner != "unknown" ? gameEndRender() : null}
-                        <Grids enemyShipsRemainingSave={enemyShipsRemainingSave} gameInfo={gameInfo} turnNumber={turnNumber} playerName={playerName} turn={turn} miss={miss} enemyMiss={enemyMiss} player2Name={player2Name}
+                        <Grids enemyShipsRemaining={enemyShipsRemaining} gameInfo={gameInfo} turnNumber={turnNumber} playerName={playerName} turn={turn} miss={miss} enemyMiss={enemyMiss} player2Name={player2Name}
                             placedShip={placedShip} player1Data={player1Data} setPlacedShip={setPlacedShip}
                             player2Data={player2Data} savedName={savedName} shipInfo={shipInfo}
                             shipDamage={shipDamage} enemyShipDamage={enemyShipDamage}
