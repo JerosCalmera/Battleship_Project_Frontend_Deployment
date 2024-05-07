@@ -89,6 +89,10 @@ body {
   padding-right: 50px;
 }
 
+.centre {
+  text-align: center;
+}
+
 .leaderBoard {
   height: auto;
   width: 500px;
