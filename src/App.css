@@ -6,8 +6,9 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-h2 {
-  padding-left: 14%;
+
+.gridTitle {
+  padding-left: 15%;
 }
 
 
@@ -77,15 +78,12 @@ h2 {
 }
 
 .gameInfo {
-  margin-top: 10px;
-  padding-top: 15px;
-  height: 120px;
+  height: 145px;
   width: 350px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.708);
   border-radius: 20px;
-  padding: 15px;
 }
 
 .leaderBoard {

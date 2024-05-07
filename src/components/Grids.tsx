@@ -245,7 +245,9 @@ const Grids: React.FC<Props> = ({gameInfo, turnNumber, playerName, turn, miss, e
                         </div>
                     </div>
                     <div className="gameBoardRender">
-                        <h2>{player1Data.includes("Computer") ? player1Data.includes(savedName) ? "Error": "Setting up...." : player1Data }</h2>
+                        <div className="gridTitle">
+                            <h3>{player1Data.includes("Computer") ? player1Data.includes(savedName) ? "Error": "Setting up...." : player1Data }</h3>
+                        </div>
                         <ul>
                             {populateGrid()}
                             <button name="end" className="endCellCorner">*</button>
@@ -253,7 +255,9 @@ const Grids: React.FC<Props> = ({gameInfo, turnNumber, playerName, turn, miss, e
                         </ul>
                     </div >
                     <div className="gameBoardRender2">
-                        <h2>{player2Data.includes("Computer") ? player2Data.includes(savedName) ? !player2Data.includes(savedName) ? player2Data : "Computer " : "Computer" : player2Data}</h2>
+                        <div className="gridTitle">
+                            <h3>{player2Data.includes("Computer") ? player2Data.includes(savedName) ? !player2Data.includes(savedName) ? player2Data : "Computer " : "Computer" : player2Data}</h3>
+                        </div>
                         <ul>
                             {populateEnemyGrid()}
                             <button name="end" className="endCellCorner">*</button>
