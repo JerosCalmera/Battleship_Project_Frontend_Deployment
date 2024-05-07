@@ -27,8 +27,8 @@ const GameInfoBox: React.FC<Props> = ({enemyShipsRemaining, player1Data, turnNum
             {player1Data.length > 1 ?
             <div className="gameInfoOuter">
                 <div className="gameInfo">
-                    {shipInfo.length === 60 && readyStatus != "Ready" ? <h4>Waiting for all players to be ready</h4> : null}
                     {shipInfo.length > 1 && readyStatus === "Ready" ? <h4>Last Turn: {gameInfo}</h4> : null}
+                    {shipInfo.length === 60 && readyStatus != "Ready" ? <h4>Waiting for all players to be ready</h4> : null}
                     <h4>Turn ({turnNumber}): {turn.includes("Computer") ? "Computer" : turn}</h4>
                     <div className="centre">
                     {shipInfo.length === 60 && readyStatus === "Not Ready" ? <button onClick={handleConfirmReady} className="button">Confirm Ready</button> : null}
