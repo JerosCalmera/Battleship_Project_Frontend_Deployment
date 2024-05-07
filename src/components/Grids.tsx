@@ -31,7 +31,6 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
     const [placedReadyShip, setPlacedReadyShip] = useState<string>("")
     const [shipSize, setShipSize] = useState<number>(0)
     const [shipToPlace, setShipToPlace] = useState<string>("")
-    const [matchStart, setMatchStart] = useState<string>("")
 
     const [carrier, setCarrier] = useState<number>(1)
     const [battleship, setBattleship] = useState<number>(2)
@@ -197,7 +196,6 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
 
     const matchBegin = () => {
         stompClient.send("/app/matchStart", {}, JSON.stringify(savedName));
-        setMatchStart("")
         setShipPlacement(true)
     }
 
