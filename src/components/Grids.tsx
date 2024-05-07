@@ -197,7 +197,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
 
     const matchBegin = () => {
         stompClient.send("/app/matchStart", {}, JSON.stringify(savedName));
-        setMatchStart("Ready")
+        setMatchStart("")
         setShipPlacement(true)
     }
 
