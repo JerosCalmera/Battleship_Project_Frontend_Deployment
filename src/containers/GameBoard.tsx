@@ -19,6 +19,7 @@ function GameBoard() {
 
     const [shipInfo, setShipInfo] = useState<string>("")
     const [shipDamage, setShipDamage] = useState<string>("")
+    const [enemyShipsRemaining, setEnemyShipsRemaining] = useState<number>(10)
 
     const [enemyShipDamage, setEnemyShipDamage] = useState<string>("")
 
@@ -349,6 +350,8 @@ function GameBoard() {
         }
         let newMessage: string = message.body.slice(16, -2);
         if (newMessage.includes(roomNumberSave.current) && roomNumberSave.current.length > 0) {
+            if (newMessage.includes(": You destroyed my") && !newMessage.includes(playerNameSave.current))
+                {setEnemyShipsRemaining(enemyShipsRemaining -1)}
             newMessage = message.body.slice(20, -2);
             setChat((prevChat) => {
             const updatedChat = [...prevChat, newMessage];
