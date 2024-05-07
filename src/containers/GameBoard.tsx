@@ -224,7 +224,7 @@ function GameBoard() {
 
     useEffect(() => {
         setLeaderBoard
-        if (serverMessageLog === "Game server ready....") {
+        if (serverMessageLog === "Game server ready...." && leaderBoard.length < 1) {
             stompClient.send("/app/leaderBoard", {}, JSON.stringify("Game start"));
         }
     }, [serverMessageLog]);
