@@ -252,7 +252,7 @@ function GameBoard() {
 
     const roomNumberSave = useRef(passwordEntry);
 
-    // const enemyShipsRemainingSave = useRef(enemyShipsRemaining);
+    const enemyShipsRemainingSave = useRef(enemyShipsRemaining);
 
     const leaderBoardSave = useRef(leaderBoard);
 
@@ -282,9 +282,9 @@ function GameBoard() {
         chatStorageSave.current = chatStorage
     }, [chat]);
 
-    // useEffect(() => {
-    //     enemyShipsRemainingSave.current = enemyShipsRemaining
-    // }, [chat]);
+    useEffect(() => {
+        enemyShipsRemainingSave.current = enemyShipsRemaining
+    }, [chat]);
 
     useEffect(() => {
         player2NameSave.current = player2Name
@@ -357,7 +357,7 @@ function GameBoard() {
         let newMessage: string = message.body.slice(16, -2);
         if (newMessage.includes(roomNumberSave.current) && roomNumberSave.current.length > 0) {
             if (newMessage.includes(": You destroyed my") && !newMessage.includes(playerNameSave.current))
-                {setEnemyShipsRemaining(enemyShipsRemaining -1)}
+                {setEnemyShipsRemaining(enemyShipsRemainingSave.current -1)}
             newMessage = message.body.slice(20, -2);
             setChat((prevChat) => {
             const updatedChat = [...prevChat, newMessage];
