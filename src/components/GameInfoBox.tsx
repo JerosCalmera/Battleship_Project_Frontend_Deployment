@@ -8,13 +8,12 @@ interface Props {
     turnNumber: number;
     matchBegin: () => void;
     randomPlacement: () => void;
-    matchStart: string;
     player1Data: string
     enemyShipsRemaining: number;
 }
 
 
-const GameInfoBox: React.FC<Props> = ({enemyShipsRemaining, player1Data, turnNumber, turn, gameInfo, shipInfo, matchBegin, randomPlacement, matchStart}) => {
+const GameInfoBox: React.FC<Props> = ({enemyShipsRemaining, player1Data, turnNumber, turn, gameInfo, shipInfo, matchBegin, randomPlacement}) => {
 
     const [readyStatus, setReadyStatus] = useState<string>("Not Ready")
 
