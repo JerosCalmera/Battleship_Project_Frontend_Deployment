@@ -84,7 +84,8 @@ body {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.708);
   border-radius: 20px;
-  line-height: 140%;
+  line-height: 145%;
+  padding-bottom: 10px;
 }
 
 .leaderBoard {
@@ -159,8 +160,10 @@ body {
   width: auto;
   background-color: rgba(0, 0, 0, 0.888); 
   border-radius: 20px;
-  padding: 40px;
-  padding-bottom: 40px;
+  padding-bottom: 80px;
+  padding-top: 20px;
+  padding-right: 40px;
+  padding-left: 40px;
   text-align: center;
   line-height: 165%;
 }

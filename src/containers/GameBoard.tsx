@@ -466,7 +466,7 @@ function GameBoard() {
                     <br />
                     If you wish, you can play against the computer by selecting that option, be forewarned however, the computer is no pushover!<br />
                     <br />
-                    Your username is saved in the cloud, so you can return and continue playing and leveling up by re-entering that username.
+                    Your username is saved in the database, so you can return and continue playing and leveling up by re-entering that username.
                     </div>
                     </h3>
                         <button className="button" onClick={startUpFlashScreen}>Ok</button>
