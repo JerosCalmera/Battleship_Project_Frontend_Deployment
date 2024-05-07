@@ -26,7 +26,7 @@ const GameInfoBox: React.FC<Props> = ({enemyShipsRemaining, player1Data, turnNum
                     {shipInfo.length === 60 && matchStart.length > 1 ? <button onClick={matchBegin} className="button">Confirm Ready</button> : null}
                     {shipInfo.length > 1 && shipInfo.length < 60 ? <h4>Placing ships...</h4> : null}
                     {shipInfo.length < 1 && matchStart.length > 2 ? <button onClick={randomPlacement} className="button">Random Ship Placement</button> : null}
-                    <h4>Enemy Ships remaining: {enemyShipsRemaining}</h4>
+                    <h4>Enemy Ships remaining: {enemyShipsRemaining} "Test"</h4>
                 </div>
             </div> : null}
         </>
