@@ -217,13 +217,6 @@ function GameBoard() {
 
     useEffect(() => {
         if (loading == true) {
-                <LoadingSplash />
-        }
-    }, [loading])
-
-
-    useEffect(() => {
-        if (loading == true) {
             setLoading(false)
         }
     }, [hidden])
@@ -547,6 +540,7 @@ function GameBoard() {
             {bugReport === 1 ? bugReportingRender() : null}
             {serverStatus == true && startUpFlash === 1 ? startUpFlashRender() : null}
             <div className={serverStatusStyle()}>
+                {loading === true ? <><LoadingSplash /></> : null}
                 {serverStatus == true ? <h5>Connected to game server</h5> :
                     <>
                         <h5>Not connected to game server</h5><LoadingSplash />
