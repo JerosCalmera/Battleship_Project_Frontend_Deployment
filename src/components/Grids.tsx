@@ -152,7 +152,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
                 stompClient.send("/app/placement", {}, JSON.stringify(value + shipSize + savedName));
                 setPlacedReadyShip(placedReadyShip + value)
             }
-            else if (shipInfo.includes(value)) { stompClient.send("/app/chat", {}, JSON.stringify("Ship already present!")) }
+            else if (shipInfo.includes(value)) { return }
             {
                 if (placedReadyShip.length === 2) {
                     setPlacedReadyShip("")
