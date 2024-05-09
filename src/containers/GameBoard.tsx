@@ -301,7 +301,7 @@ function GameBoard() {
         }
         else {
             setPasswordEntry(password)
-            stompClient.send("/app/room", {}, JSON.stringify(password));
+            stompClient.send("/app/room", {}, JSON.stringify(password + playerNameSave.current));
         }
     }
 
