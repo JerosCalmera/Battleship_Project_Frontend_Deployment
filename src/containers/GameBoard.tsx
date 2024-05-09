@@ -469,7 +469,7 @@ function GameBoard() {
         <div className="bugReportPageFade">
             <div className="bugReportOuter">
                 <div className="gameFlash">
-                <h3>Welcome to Solar Fury! A multiplayer battleship game with a sci-fi theme! <br />
+                <h3>Welcome to Solar Fury! A single and multiplayer battleship game with a sci-fi style! <br />
                     <div className="gameFlashBody">
                     <br />
                     To get started, enter a name in the prompt, and then you have the option of either entering a room code if a friend has started a room, creating a new room code or randomly generating one. <br />
