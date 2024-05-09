@@ -347,6 +347,7 @@ function GameBoard() {
     const saveName = () => {
         if (playerName.length < 5 || playerName.length > 12) {
             stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Sorry usernames must be between 5 and 12 characters long!"));
+            setLoading(true)
         }
         else {
             setSaveName(playerName);
