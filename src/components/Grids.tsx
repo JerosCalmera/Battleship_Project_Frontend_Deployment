@@ -207,7 +207,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
                 <div className="gameBoardOuter">
                     <div className="shipPlacementOuter">
                         <div className="shipPlacementInner">
-                            {carrier > 0 ?
+                            {carrier > 0 && shipInfo.length < 60 ?
                                 <ul>
                                     <button onClick={placeCarrier} className={shipToPlaceStyle("Carrier")}>*</button>
                                     <button onClick={placeCarrier} className={shipToPlaceStyle("Carrier")}>*</button>
@@ -217,7 +217,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
                                     <h4>Carrier: x{carrier}</h4><br />
                                 </ul>
                                 : null}
-                            {battleship > 0 ?
+                            {battleship > 0 && shipInfo.length < 60 ?
                                 <ul>
                                     <button onClick={placeBattleship} className={shipToPlaceStyle("Battleship")}>*</button>
                                     <button onClick={placeBattleship} className={shipToPlaceStyle("Battleship")}>*</button>
@@ -226,7 +226,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
                                     <h4>Battleship: x{battleship}</h4><br />
                                 </ul>
                                 : null}
-                            {cruiser > 0 ?
+                            {cruiser > 0 && shipInfo.length < 60 ?
                                 <ul>
                                     <button onClick={placeCruiser} className={shipToPlaceStyle("Cruiser")}>*</button>
                                     <button onClick={placeCruiser} className={shipToPlaceStyle("Cruiser")}>*</button>
@@ -234,7 +234,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
                                     <h4>Cruiser: x{cruiser}</h4> <br />
                                 </ul>
                                 : null}
-                            {destroyer > 0 ?
+                            {destroyer > 0 && shipInfo.length < 60 ?
                                 <ul>
                                     <button onClick={placeDestroyer} className={shipToPlaceStyle("Destroyer")}>*</button>
                                     <button onClick={placeDestroyer} className={shipToPlaceStyle("Destroyer")}>*</button>
