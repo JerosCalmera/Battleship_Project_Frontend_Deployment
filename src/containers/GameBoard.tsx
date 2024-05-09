@@ -218,7 +218,7 @@ function GameBoard() {
         if (loading == true) {
             setLoading(false)
         }
-    }, [hidden])
+    }, [hidden, nameValidated])
 
     useEffect(() => {
         if (missCheck.includes(playerNameSave.current)) {
@@ -344,6 +344,7 @@ function GameBoard() {
             setSaveName(playerName);
             stompClient.send("/app/name", {}, JSON.stringify(playerName));
             setReady("ready");
+            setLoading(true)
         }
 
     }
