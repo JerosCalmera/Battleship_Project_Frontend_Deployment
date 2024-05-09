@@ -332,15 +332,14 @@ function GameBoard() {
         const randomNumber = Math.floor(Math.random() * 10000)
         const roomNumber = randomNumber.toString().padStart(4, "0");
         setPasswordEntry(roomNumber)
+        setPassword(roomNumber)
         stompClient.send("/app/room", {}, JSON.stringify(roomNumber + playerNameSave.current));
-        setPassword("")
         setLoading(true)
     }
 
     const saveName = () => {
         if (playerName.length < 5 || playerName.length > 12) {
             stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Sorry usernames must be between 5 and 12 characters long!"));
-            setLoading(true)
         }
         else {
             setSaveName(playerName);
