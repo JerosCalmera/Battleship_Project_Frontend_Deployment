@@ -218,7 +218,7 @@ function GameBoard() {
         if (loading == true) {
             setLoading(false)
         }
-    }, [hidden, nameValidated])
+    }, [hidden, nameValidated, chat])
 
     useEffect(() => {
         if (missCheck.includes(playerNameSave.current)) {
