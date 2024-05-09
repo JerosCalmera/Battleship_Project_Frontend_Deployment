@@ -443,7 +443,7 @@ function GameBoard() {
 
     const sendBugReport = () => {
         stompClient.send("/app/bugReport", {}, JSON.stringify("DATE: " + Date() + ", USER: " + savedName + ", REPORT: "  + bugReportInput));
-        stompClient.send("/app/globalChat", {}, JSON.stringify(roomNumberSave.current + "Admin: Thank you, your message has been sent to the developer."));
+        stompClient.send("/app/chat", {}, JSON.stringify(roomNumberSave.current + "Admin: Thank you, your message has been sent to the developer."));
         setBugReport(0)
     }
 
