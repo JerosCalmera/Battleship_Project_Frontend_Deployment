@@ -219,7 +219,7 @@ function GameBoard() {
         if (loading == true) {
                 <LoadingSplash />
         }
-    }, [setLoading])
+    }, [loading])
 
 
     useEffect(() => {
