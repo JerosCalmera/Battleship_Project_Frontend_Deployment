@@ -61,6 +61,8 @@ function GameBoard() {
 
     const [chatStorage, setChatStorage] = useState<string>("empty")
 
+    const [loading, setLoading] = useState<boolean>(false)
+
     useEffect(() => {
         const connectToWebSocket = () => {
         const socket = new SockJS(`${BASE_URL}/game`);
@@ -214,6 +216,19 @@ function GameBoard() {
     }, [turn])
 
     useEffect(() => {
+        if (loading == true) {
+                <LoadingSplash />
+        }
+    }, [setLoading])
+
+
+    useEffect(() => {
+        if (loading == true) {
+            setLoading(false)
+        }
+    }, [hidden])
+
+    useEffect(() => {
         if (missCheck.includes(playerNameSave.current)) {
             setMiss(miss + missCheck);
         }
@@ -303,6 +318,7 @@ function GameBoard() {
             setPasswordEntry(password)
             stompClient.send("/app/room", {}, JSON.stringify(password + playerNameSave.current));
             setPassword("")
+            setLoading(true)
         }
     }
 
@@ -323,8 +339,9 @@ function GameBoard() {
         const randomNumber = Math.floor(Math.random() * 10000)
         const roomNumber = randomNumber.toString().padStart(4, "0");
         setPasswordEntry(roomNumber)
-        setPassword(roomNumber)
         stompClient.send("/app/room", {}, JSON.stringify(roomNumber + playerNameSave.current));
+        setPassword("")
+        setLoading(true)
     }
 
     const saveName = () => {
@@ -408,6 +425,7 @@ function GameBoard() {
         setPasswordEntry(roomNumber)
         setPassword(roomNumber)
         stompClient.send("/app/computer", {}, JSON.stringify(roomNumber + playerNameSave.current));
+        setLoading(true)
     }
     
     const bugReporting = () => {
