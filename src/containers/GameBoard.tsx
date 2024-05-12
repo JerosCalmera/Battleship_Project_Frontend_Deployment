@@ -215,7 +215,7 @@ function GameBoard() {
         return () => {
             if (stompClient) {
                 stompClient.disconnect(() => {
-                console.log("Connection disconnect");
+                console.log("Connection disconnected");
                 });
                 setServerStatus(false)
             }
@@ -230,7 +230,7 @@ function GameBoard() {
         if (loading == true) {
             setLoading(false)
         }
-    }, [ping])
+    }, [hidden, nameValidated, chat, serverMessageLog, stompClient, ping])
 
     useEffect(() => {
         if (missCheck.includes(playerNameSave.current)) {
@@ -246,6 +246,7 @@ function GameBoard() {
         if (serverMessageLog === "Game server ready...." && leaderBoard.length < 1) {
             stompClient.send("/app/leaderBoard", {}, JSON.stringify("Game start"));
             stompClient.send("/app/ping", {}, JSON.stringify("Ping"));
+
         }
     }, [serverMessageLog]);
 
