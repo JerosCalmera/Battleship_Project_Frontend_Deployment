@@ -62,6 +62,9 @@ function GameBoard() {
 
     const [loading, setLoading] = useState<boolean>(false)
 
+    const [ping, setPing] = useState<boolean>(false)
+
+
     useEffect(() => {
         const connectToWebSocket = () => {
         const socket = new SockJS(`${BASE_URL}/game`);
@@ -179,6 +182,15 @@ function GameBoard() {
                 setWinner(message.body.slice(16, -2))}
             });
 
+            client.subscribe("/topic/ping", () => {
+            if (ping == true) {
+            setPing(false)}
+            else {setPing(true)}
+            setTimeout(() => {
+            stompClient.send("/app/ping", {}, JSON.stringify("Ping"));
+            }, 1000);
+            });
+            
             client.subscribe("/topic/bugReport", () => {
             });
             
@@ -233,6 +245,7 @@ function GameBoard() {
         setLeaderBoard
         if (serverMessageLog === "Game server ready...." && leaderBoard.length < 1) {
             stompClient.send("/app/leaderBoard", {}, JSON.stringify("Game start"));
+            stompClient.send("/app/ping", {}, JSON.stringify("Ping"));
         }
     }, [serverMessageLog]);
 
