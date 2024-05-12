@@ -203,7 +203,7 @@ function GameBoard() {
         });
 
             client.ws.onclose = () => {
-                (console.log("Connection terminated"))
+                (console.log("Connection closed"))
                 setServerStatus(false);
                 setTimeout(connectToWebSocket, 1000);
             };
@@ -215,7 +215,7 @@ function GameBoard() {
         return () => {
             if (stompClient) {
                 stompClient.disconnect(() => {
-                console.log("Connection terminated");
+                console.log("Connection disconnect");
                 });
                 setServerStatus(false)
             }
@@ -230,7 +230,7 @@ function GameBoard() {
         if (loading == true) {
             setLoading(false)
         }
-    }, [hidden, nameValidated, chat, serverMessageLog, stompClient])
+    }, [ping])
 
     useEffect(() => {
         if (missCheck.includes(playerNameSave.current)) {
