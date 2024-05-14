@@ -353,8 +353,9 @@ function GameBoard() {
         const roomNumber = randomNumber.toString().padStart(4, "0");
         setPasswordEntry(roomNumber)
         setPassword(roomNumber)
-        // setLoading(true)
+        setLoading(true)
         stompClient.send("/app/room", {}, JSON.stringify(roomNumber + playerNameSave.current));
+        console.log(roomNumberSave.current + " Room number")
     }
 
     const saveName = () => {
