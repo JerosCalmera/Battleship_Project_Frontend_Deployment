@@ -145,6 +145,7 @@ function GameBoard() {
 
             client.subscribe("/topic/restart", (message: any) => {
                 const newMessage: string = message.body.slice(12, -2)
+                console.log(roomNumberSave.current + " Room number")
                 if (newMessage.includes(roomNumberSave.current) && (newMessage.includes("Player Left"))) {
                     setPlayerLeft(0)};
             });
