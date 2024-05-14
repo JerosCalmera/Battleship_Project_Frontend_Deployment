@@ -534,19 +534,19 @@ function GameBoard() {
         )
     }
 
-    const playerLeftRender = () => {
-        return (
-        <div className="bugReportPageFade">
-            <div className="bugReportOuter">
-                <div className="gameFlash">
-                <h3>The other player has left the game, press restart to return to the start screen </h3>
-                        <button className="button" onClick={restart}>Restart</button>
-                </div>
-            </div>
-        </div>
-        )
-    }
-    // TEST
+    // const playerLeftRender = () => {
+    //     return (
+    //     <div className="bugReportPageFade">
+    //         <div className="bugReportOuter">
+    //             <div className="gameFlash">
+    //             <h3>The other player has left the game, press restart to return to the start screen </h3>
+    //                     <button className="button" onClick={restart}>Restart</button>
+    //             </div>
+    //         </div>
+    //     </div>
+    //     )
+    // }
+
     const gameEndRender = () => {
     return (
         <div className="bugReportPageFade">
