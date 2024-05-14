@@ -57,6 +57,7 @@ function GameBoard() {
 
     const [startUpFlash, setStartUpFlash] = useState<number>(1)
     const [gameFlash, setGameFlash] = useState<number>(1)
+    const [playerLeft, setPlayerLeft] = useState<number>(1)
 
     const [chatStorage, setChatStorage] = useState<string>("empty")
 
@@ -188,7 +189,7 @@ function GameBoard() {
             else {setPing(true)}
             setTimeout(() => {
             stompClient.send("/app/ping", {}, JSON.stringify("Ping"));
-            }, 1000);
+            }, 5000);
             });
             
             client.subscribe("/topic/bugReport", () => {
@@ -370,9 +371,12 @@ function GameBoard() {
         setChatEntry("")
     }
 
+    //test
     const hiddenParse = (message: any) => {
         if (message.includes(roomNumberSave.current)) {
         setHidden(message)}
+        if (message.includes(roomNumberSave.current) && "Player left") {
+            setPlayerLeft(0)}
     }
 
     const chatParse = (message: any) => {
@@ -530,6 +534,19 @@ function GameBoard() {
         )
     }
 
+    const playerLeftRender = () => {
+        return (
+        <div className="bugReportPageFade">
+            <div className="bugReportOuter">
+                <div className="gameFlash">
+                <h3>The other player has left the game, press restart to return to the start screen </h3><br />
+                        <button className="button" onClick={restart}>Restart</button>
+                </div>
+            </div>
+        </div>
+        )
+    }
+
     const gameEndRender = () => {
     return (
         <div className="bugReportPageFade">
@@ -552,6 +569,7 @@ function GameBoard() {
     return (
         <>
             {bugReport === 1 ? bugReportingRender() : null}
+            {playerLeft === 0 ? playerLeftRender() : null}
             {serverStatus == true && startUpFlash === 1 ? startUpFlashRender() : null}
             <div className={serverStatusStyle()}>
                 {loading === true ? <><LoadingSplash /></> : null}
