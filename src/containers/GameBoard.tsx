@@ -546,7 +546,7 @@ function GameBoard() {
         </div>
         )
     }
-
+    // TEST
     const gameEndRender = () => {
     return (
         <div className="bugReportPageFade">
