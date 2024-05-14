@@ -353,8 +353,8 @@ function GameBoard() {
         const roomNumber = randomNumber.toString().padStart(4, "0");
         setPasswordEntry(roomNumber)
         setPassword(roomNumber)
-        stompClient.send("/app/room", {}, JSON.stringify(roomNumber + playerNameSave.current));
         setLoading(true)
+        stompClient.send("/app/room", {}, JSON.stringify(roomNumber + playerNameSave.current));
     }
 
     const saveName = () => {
@@ -363,9 +363,9 @@ function GameBoard() {
         }
         else {
             setSaveName(playerName);
-            stompClient.send("/app/name", {}, JSON.stringify(playerName));
             setReady("ready");
             setLoading(true)
+            stompClient.send("/app/name", {}, JSON.stringify(playerName));
         }
 
     }
