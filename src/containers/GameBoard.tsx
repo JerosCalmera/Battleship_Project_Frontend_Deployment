@@ -231,7 +231,7 @@ function GameBoard() {
         if (loading == true) {
             setLoading(false)
         }
-    }, [hidden, nameValidated, chat, serverMessageLog, stompClient, ping])
+    }, [hidden, nameValidated, chat, serverMessageLog, stompClient])
 
     useEffect(() => {
         if (missCheck.includes(playerNameSave.current)) {
@@ -375,8 +375,8 @@ function GameBoard() {
     const hiddenParse = (message: any) => {
         if (message.includes(roomNumberSave.current)) {
         setHidden(message)}
-        if (message.includes(roomNumberSave.current) && message.includes("Player left")) {
-            setPlayerLeft(0)}
+        // if (message.includes(roomNumberSave.current) && message.includes("Player left")) {
+        //     setPlayerLeft(0)}
     }
 
     const chatParse = (message: any) => {
