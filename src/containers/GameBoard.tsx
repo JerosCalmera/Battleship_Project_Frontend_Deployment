@@ -195,7 +195,7 @@ function GameBoard() {
             else {setPing(true)}
             setTimeout(() => {
             stompClient.send("/app/ping", {}, JSON.stringify("Ping"));
-            }, 5000);
+            }, 50000);
             });
             
             client.subscribe("/topic/bugReport", () => {
