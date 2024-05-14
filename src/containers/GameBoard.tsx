@@ -57,7 +57,7 @@ function GameBoard() {
 
     const [startUpFlash, setStartUpFlash] = useState<number>(1)
     const [gameFlash, setGameFlash] = useState<number>(1)
-    const [playerLeft, setPlayerLeft] = useState<number>(1)
+    // const [playerLeft, setPlayerLeft] = useState<number>(1)
 
     const [chatStorage, setChatStorage] = useState<string>("empty")
 
@@ -569,7 +569,7 @@ function GameBoard() {
     return (
         <>
             {bugReport === 1 ? bugReportingRender() : null}
-            {playerLeft === 0 ? playerLeftRender() : null}
+            {/* {playerLeft === 0 ? playerLeftRender() : null} */}
             {serverStatus == true && startUpFlash === 1 ? startUpFlashRender() : null}
             <div className={serverStatusStyle()}>
                 {loading === true ? <><LoadingSplash /></> : null}
