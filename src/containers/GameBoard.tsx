@@ -184,12 +184,12 @@ function GameBoard() {
             });
 
             client.subscribe("/topic/ping", () => {
-            // if (ping == true) {
-            // setPing(false)}
-            // else {setPing(true)}
-            // setTimeout(() => {
-            // stompClient.send("/app/ping", {}, JSON.stringify("Ping"));
-            // }, 5000);
+            if (ping == true) {
+            setPing(false)}
+            else {setPing(true)}
+            setTimeout(() => {
+            stompClient.send("/app/ping", {}, JSON.stringify("Ping"));
+            }, 10000);
             });
             
             client.subscribe("/topic/bugReport", () => {
