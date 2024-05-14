@@ -370,6 +370,7 @@ function GameBoard() {
         setChatEntry("")
     }
 
+    //test
     const hiddenParse = (message: any) => {
         if (message.includes(roomNumberSave.current)) {
         setHidden(message)}
