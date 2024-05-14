@@ -375,7 +375,7 @@ function GameBoard() {
     const hiddenParse = (message: any) => {
         if (message.includes(roomNumberSave.current)) {
         setHidden(message)}
-        if (message.includes(roomNumberSave.current) && "Player left") {
+        if (message.includes(roomNumberSave.current) && message.includes("Player left")) {
             setPlayerLeft(0)}
     }
 
@@ -539,7 +539,7 @@ function GameBoard() {
         <div className="bugReportPageFade">
             <div className="bugReportOuter">
                 <div className="gameFlash">
-                <h3>The other player has left the game, press restart to return to the start screen </h3><br />
+                <h3>The other player has left the game, press restart to return to the start screen </h3>
                         <button className="button" onClick={restart}>Restart</button>
                 </div>
             </div>
