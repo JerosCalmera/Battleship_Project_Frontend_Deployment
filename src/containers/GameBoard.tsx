@@ -355,7 +355,6 @@ function GameBoard() {
         setPassword(roomNumber)
         setLoading(true)
         stompClient.send("/app/room", {}, JSON.stringify(roomNumber + playerNameSave.current));
-        console.log(roomNumberSave.current + " Room number")
     }
 
     const saveName = () => {
