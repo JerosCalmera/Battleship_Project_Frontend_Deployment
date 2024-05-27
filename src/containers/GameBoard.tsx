@@ -375,7 +375,7 @@ function GameBoard() {
     const hiddenParse = (message: any) => {
         if (message.includes(roomNumberSave.current)) {
         setHidden(message)}
-        if (message.includes(roomNumberSave.current) && "Player left" && !playerNameSave.current) {
+        if (message.includes(roomNumberSave.current) && "Player left" && !winner.includes(playerNameSave.current)) {
             setPlayerLeft(0)}
     }
 
