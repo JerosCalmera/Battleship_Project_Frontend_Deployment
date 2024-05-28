@@ -7,6 +7,9 @@ interface Props {
     auth: () => void;
     generate: () => void;
     playVsComputer: () => void;
+    handleAuthEnterPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    handleSaveNameEnterPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    handleChatEnterPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     playerName: string;
     ready: string;
     hidden: string;
@@ -20,7 +23,7 @@ interface Props {
     player1Data: string;
 }
 
-const StartUp: React.FC<Props> = ({ player1Data, nameValidated, roomNumberSave, hidden, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
+const StartUp: React.FC<Props> = ({ handleAuthEnterPress, handleSaveNameEnterPress, handleChatEnterPress, player1Data, nameValidated, roomNumberSave, hidden, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
 
     // Chatbox conditional styling
     const chatBox = () => {
@@ -36,7 +39,14 @@ const StartUp: React.FC<Props> = ({ player1Data, nameValidated, roomNumberSave, 
             {nameValidated === true && !hidden.includes("Server: Room saved!") && !hidden.includes(roomNumberSave.current) ?
                 <div className="startupOuter">
                     <h3>Please enter or generate a room code, or play against the computer</h3>
-                    <input type="number" className="input" name="room" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+                    <input 
+                    type="number" 
+                    className="input" 
+                    name="room" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={handleAuthEnterPress}
+                    ></input>
                     <button className="button" onClick={auth}>Save</button>
                     <button className="button" onClick={generate}>Generate</button>
                     <button className="button" onClick={playVsComputer}>Play against the computer</button>
@@ -46,7 +56,13 @@ const StartUp: React.FC<Props> = ({ player1Data, nameValidated, roomNumberSave, 
             {nameValidated === false ?
                 <div className="startupOuter">
                     <h3> Welcome to Solar Fury, Please enter your name</h3>
-                    Player name: <input className="input" name="name" value={playerName} onChange={(e) => setPlayerName(e.target.value)}></input>
+                    Player name: <input 
+                    className="input" 
+                    name="name"
+                    value={playerName} 
+                    onChange={(e) => setPlayerName(e.target.value)}
+                    onKeyDown={handleSaveNameEnterPress}
+                    ></input>
                     <button className="button" onClick={saveName}>Save</button>
                 </div>
                 : null}
@@ -57,7 +73,13 @@ const StartUp: React.FC<Props> = ({ player1Data, nameValidated, roomNumberSave, 
                         <li className="chatList" key={index}>{message}<br /></li>
                     ))}
                     <br />
-                    <input className="input" name="chat" value={chatEntry} onChange={(e) => setChatEntry(e.target.value)}></input>
+                    <input 
+                    className="input" 
+                    name="chat" 
+                    value={chatEntry} 
+                    onChange={(e) => setChatEntry(e.target.value)}
+                    onKeyDown={handleChatEnterPress}
+                    ></input>
                     <button className="button" onClick={chatSend}>Send</button>
                 </div>
             </div>

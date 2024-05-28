@@ -299,6 +299,31 @@ function GameBoard() {
         player2NameSave.current = player2Name
     }, [player2Name]);
 
+    // Allows for text to be sent to an input using the enter key
+    const handleChatEnterPress = (e:any) => {
+        if (e.key === 'Enter') {
+            chatSend()
+        }
+    }
+
+    const handleAuthEnterPress = (e:any) => {
+        if (e.key === 'Enter') {
+            auth()
+        }
+    }
+
+    const handleSaveNameEnterPress = (e:any) => {
+        if (e.key === 'Enter') {
+            saveName()
+        }
+    }
+
+    const handleBugReportEnterPress = (e:any) => {
+        if (e.key === 'Enter') {
+            sendBugReport()
+        }
+    }
+
     // Checks a players name has been validated as correct
     const nameValidation = (message: any) => {
         if (message.includes(playerNameSave.current)) { 
@@ -488,7 +513,13 @@ function GameBoard() {
                         <button className="button" onClick={bugReporting}>X</button>
                     </div>
                     <h3>Please write your bug report (or message) in as much detail as possible</h3>
-                    <input className="bugReportInputBox" name="room" value={bugReportInput} onChange={(e) => setBugReportInput(e.target.value)}></input><br />
+                    <input 
+                    className="bugReportInputBox" 
+                    name="room" 
+                    value={bugReportInput} 
+                    onChange={(e) => setBugReportInput(e.target.value)}
+                    onKeyDown={handleBugReportEnterPress}
+                    ></input><br />
                         <button className="button" onClick={sendBugReport}>Send</button>
                 </div>
             </div>
@@ -614,7 +645,7 @@ function GameBoard() {
                             stompClient={stompClient} />
                     </div> : null}
 
-            <StartUp player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hidden={hidden} chatEntry={chatEntry} ready={ready} password={password}
+            <StartUp handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hidden={hidden} chatEntry={chatEntry} ready={ready} password={password}
                 setPassword={setPassword} auth={auth} generate={generate} playerName={playerName} chat={chat}
                 saveName={saveName} chatSend={chatSend} setPlayerName={setPlayerName} setChatEntry={setChatEntry}
                 leaderBoard={leaderBoard} />
