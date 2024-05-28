@@ -37,6 +37,8 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
     const [cruiser, setCruiser] = useState<number>(3)
     const [destroyer, setDestroyer] = useState<number>(4)
 
+    const [random, setRandom] = useState<number>(0)
+
     // When a ship is placed, removes that ship from the total unplaced ships
     useEffect(() => {
         const shipType = "CarrierBattleshipCruiserDestroyer";
@@ -146,9 +148,12 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
         return numbers
     }
 
-    // Sends to the backend that a player wishes to let the computer place their ships
+    // Sends to the backend that a player wishes to let the computer place their ships, avoids repeat requests
     const randomPlacement = () => {
+        if (random === 0) {
         stompClient.send("/app/randomPlacement", {}, JSON.stringify(savedName));
+        setRandom(1)}
+        else {return}
     }
 
     // Logic for placing of ships, checks what ship is selected and that two cells have been clicked to send to the backend for auto completion for the rest of the ship if needed
