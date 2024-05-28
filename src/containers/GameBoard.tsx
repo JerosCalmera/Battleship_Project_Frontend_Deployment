@@ -462,11 +462,10 @@ function GameBoard() {
     // Formats bug report information for sending tp the database connected to the backend and sends a message to confirm it has been sent
     const sendBugReport = () => {
         stompClient.send("/app/bugReport", {}, JSON.stringify("DATE: " + Date() + ", USER: " + savedName + ", REPORT: "  + bugReportInput));
-        let roomNumberSubmit;
         if (roomNumberSave.current != "No Password") {
-            roomNumberSubmit = roomNumberSave.current;}
-        else {roomNumberSubmit = ""}
-        stompClient.send("/app/chat", {}, JSON.stringify(roomNumberSubmit + "Admin: Thank you, your message has been sent to the developer."));
+            stompClient.send("/app/chat", {}, JSON.stringify(roomNumberSave.current + "Admin: Thank you, your message has been sent to the developer."));}
+        else {
+        stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Thank you, your message has been sent to the developer."));}
         setBugReport(0)
     }
 
