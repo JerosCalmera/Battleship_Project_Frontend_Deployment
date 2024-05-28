@@ -63,7 +63,7 @@ function GameBoard() {
 
     const [loading, setLoading] = useState<boolean>(false)
 
-    const [ping, setPing] = useState<boolean>(false)
+    // const [ping, setPing] = useState<boolean>(false)
 
 
     useEffect(() => {
@@ -183,17 +183,17 @@ function GameBoard() {
                 setWinner(message.body.slice(16, -2))}
             });
 
-            client.subscribe("/topic/ping", () => {
-            if (ping == true) {
-            setPing(false)}
-            else {setPing(true)}
-            setTimeout(() => {
-            stompClient.send("/app/ping", {}, JSON.stringify("Ping"));
-            }, 5000);
-            });
+            // client.subscribe("/topic/ping", () => {
+            // if (ping == true) {
+            // setPing(false)}
+            // else {setPing(true)}
+            // setTimeout(() => {
+            // stompClient.send("/app/ping", {}, JSON.stringify("Ping"));
+            // }, 1000);
+            // });
             
-            client.subscribe("/topic/bugReport", () => {
-            });
+            // client.subscribe("/topic/bugReport", () => {
+            // });
             
             client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${BASE_URL}`));
 
@@ -231,7 +231,7 @@ function GameBoard() {
         if (loading == true) {
             setLoading(false)
         }
-    }, [hidden, nameValidated, chat, serverMessageLog, stompClient, ping])
+    }, [hidden, nameValidated, chat, serverMessageLog, stompClient])
 
     useEffect(() => {
         if (missCheck.includes(playerNameSave.current)) {
@@ -375,7 +375,7 @@ function GameBoard() {
     const hiddenParse = (message: any) => {
         if (message.includes(roomNumberSave.current)) {
         setHidden(message)}
-        if (message.includes(roomNumberSave.current) && (message.includes("Player left"))  && winner === "unknown") {
+        if (message.includes(roomNumberSave.current) && "Player left"  && winner != "unknown") {
             setPlayerLeft(0)}
     }
 
