@@ -273,7 +273,7 @@ function GameBoard() {
 
     useEffect(() => {
         gameFlashSave.current = gameFlash
-    }, [chat]);
+    }, [chat, hidden, gameFlash]);
 
     useEffect(() => {
         leaderBoardSave.current = leaderBoard
