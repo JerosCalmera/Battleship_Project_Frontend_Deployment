@@ -4,6 +4,7 @@ body {
   background-image: url(assets/backround.jpg);
   background-size: cover;
   background-attachment: scroll;
+  background-repeat: no-repeat;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
