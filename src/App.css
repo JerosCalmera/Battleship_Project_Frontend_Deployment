@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   margin: 0;
+  margin-left: 5px;
   }
   
   body {
@@ -8,7 +9,7 @@ html, body {
     color: rgb(96, 193, 193);
     background-image: url(assets/backround.jpg);
     background-size: 100vw 100vh;
-    background-attachment: scroll;
+    background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
