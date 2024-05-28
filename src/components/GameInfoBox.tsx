@@ -7,13 +7,14 @@ interface Props {
     gameInfo: string;
     turnNumber: number;
     matchBegin: () => void;
+    random: number;
     randomPlacement: () => void;
     player1Data: string
     enemyShipsRemaining: number;
 }
 
 
-const GameInfoBox: React.FC<Props> = ({enemyShipsRemaining, player1Data, turnNumber, turn, gameInfo, shipInfo, matchBegin, randomPlacement}) => {
+const GameInfoBox: React.FC<Props> = ({random , enemyShipsRemaining, player1Data, turnNumber, turn, gameInfo, shipInfo, matchBegin, randomPlacement}) => {
 
     const [readyStatus, setReadyStatus] = useState<string>("Not Ready")
 
@@ -35,7 +36,7 @@ const GameInfoBox: React.FC<Props> = ({enemyShipsRemaining, player1Data, turnNum
                     <div className="centre">
                     {shipInfo.length === 60 && readyStatus === "Not Ready" ? <button onClick={handleConfirmReady} className="button">Confirm Ready</button> : null}
                     {shipInfo.length > 1 && shipInfo.length < 60 ? <h4>Placing ships...</h4> : null}
-                    {shipInfo.length < 1 && readyStatus === "Not Ready" ? <button onClick={randomPlacement} className="button">Random Ship Placement</button> : null}
+                    {shipInfo.length < 1 && readyStatus === "Not Ready" && random === 0 ? <button onClick={randomPlacement} className="button">Random Ship Placement</button> : null}
                     </div>
                     {shipInfo.length > 1 && readyStatus === "Ready" ? <h4>Enemy Ships remaining: {enemyShipsRemaining}</h4> : null}
                 </div>
