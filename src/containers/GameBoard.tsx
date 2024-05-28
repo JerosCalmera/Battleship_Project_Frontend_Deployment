@@ -68,10 +68,10 @@ function GameBoard() {
     // WebSocket connection with error handling
     useEffect(() => {
         const connectToWebSocket = () => {
-        console.log("Connecting to WebSocket....")
         const socket = new SockJS(`${BASE_URL}/game`);
         const client = Stomp.over(socket);
 
+        if (serverStatus != true) {
         client.connect({}, () => {
             console.log("Connected to server");
             setServerStatus(true)
@@ -199,7 +199,7 @@ function GameBoard() {
             };
             setStompClient(client)
         };
-
+        }
         connectToWebSocket();
 
         return () => {
