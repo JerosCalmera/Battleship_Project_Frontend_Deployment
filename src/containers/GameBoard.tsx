@@ -463,10 +463,10 @@ function GameBoard() {
     const sendBugReport = () => {
         stompClient.send("/app/bugReport", {}, JSON.stringify("DATE: " + Date() + ", USER: " + savedName + ", REPORT: "  + bugReportInput));
         let roomNumberSubmit;
-        if (roomNumberSave.current === "No Password")
-            roomNumberSubmit = "";
-        else {roomNumberSubmit = roomNumberSave.current}
-        stompClient.send("/app/chat", {}, JSON.stringify(roomNumberSubmit+ "Admin: Thank you, your message has been sent to the developer."));
+        if (roomNumberSave.current != "No Password") {
+            roomNumberSubmit = roomNumberSave.current;}
+        else {roomNumberSubmit = ""}
+        stompClient.send("/app/chat", {}, JSON.stringify(roomNumberSubmit + "Admin: Thank you, your message has been sent to the developer."));
         setBugReport(0)
     }
 
