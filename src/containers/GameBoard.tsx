@@ -285,7 +285,7 @@ function GameBoard() {
 
     useEffect(() => {
         playerNameSave.current = savedName
-    }, [playerName, savedName]);
+    }, [playerName, savedName, chat]);
 
     useEffect(() => {
         chatStorageSave.current = chatStorage
