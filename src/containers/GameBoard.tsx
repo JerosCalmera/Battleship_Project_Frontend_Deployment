@@ -217,7 +217,7 @@ function GameBoard() {
         if (loading == true) {
             setLoading(false)
         }
-    }, [hidden, nameValidated, chat, serverMessageLog, stompClient])
+    }, [hidden, serverMessageLog])
 
     // Logic for checking who a missed shot belongs to for display
     useEffect(() => {
