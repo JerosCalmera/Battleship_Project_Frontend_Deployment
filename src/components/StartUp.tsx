@@ -22,6 +22,7 @@ interface Props {
 
 const StartUp: React.FC<Props> = ({ player1Data, nameValidated, roomNumberSave, hidden, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
 
+    // Chatbox conditional styling
     const chatBox = () => {
         if (player1Data != "Player 1")
             return "chatBoxOuter"

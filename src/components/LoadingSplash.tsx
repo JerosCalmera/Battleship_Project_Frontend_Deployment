@@ -8,6 +8,7 @@ interface Props {
 const LoadingSplash: React.FC<Props> = ({}) => {
     const [loading, setLoading] = useState<string>("Connecting to game server");
 
+    // Displays that the game is attempting to connect to the backend in an animated fashion
     useEffect(() => {
         const interval = setInterval(() => {
             setLoading(prevText => {

@@ -17,6 +17,7 @@ const GameInfoBox: React.FC<Props> = ({enemyShipsRemaining, player1Data, turnNum
 
     const [readyStatus, setReadyStatus] = useState<string>("Not Ready")
 
+    // Confirms the player is ready to begin the match
     const handleConfirmReady = () => {
         matchBegin();
         setReadyStatus("Ready")

@@ -6,9 +6,11 @@ import StartUp from "../components/StartUp";
 import LoadingSplash from "../components/LoadingSplash";
 
 function GameBoard() {
-    const BASE_URL = "https://solar-fury-backend-v1-a5761b56a343.herokuapp.com"
 
+    // WebSocket connection information
+    const BASE_URL = "https://solar-fury-backend-v1-a5761b56a343.herokuapp.com"
     const [stompClient, setStompClient] = useState<Stomp.Client>(Stomp.over(new SockJS(`${BASE_URL}/game`)));
+
     const [serverStatus, setServerStatus] = useState(false)
     const [attemptReconnect, setAttemptReconnect] = useState(0)
     const [serverMessageLog, serverSetMessageLog] = useState("")
@@ -63,9 +65,7 @@ function GameBoard() {
 
     const [loading, setLoading] = useState<boolean>(false)
 
-    // const [ping, setPing] = useState<boolean>(false)
-
-
+    // WebSocket connection with error handling
     useEffect(() => {
         const connectToWebSocket = () => {
         const socket = new SockJS(`${BASE_URL}/game`);
@@ -183,18 +183,6 @@ function GameBoard() {
                 setWinner(message.body.slice(16, -2))}
             });
 
-            // client.subscribe("/topic/ping", () => {
-            // if (ping == true) {
-            // setPing(false)}
-            // else {setPing(true)}
-            // setTimeout(() => {
-            // stompClient.send("/app/ping", {}, JSON.stringify("Ping"));
-            // }, 1000);
-            // });
-            
-            // client.subscribe("/topic/bugReport", () => {
-            // });
-            
             client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${BASE_URL}`));
 
         }, (error) => {
@@ -223,16 +211,14 @@ function GameBoard() {
         }
     }, [])
 
-    useEffect(() => {
-        setTurnNumber(turnNumber + 1)
-    }, [turn])
-
+    // Loading splash screen toggle
     useEffect(() => {
         if (loading == true) {
             setLoading(false)
         }
     }, [hidden, nameValidated, chat, serverMessageLog, stompClient])
 
+    // Logic for checking who a missed shot belongs to for display
     useEffect(() => {
         if (missCheck.includes(playerNameSave.current)) {
             setMiss(miss + missCheck);
@@ -242,16 +228,15 @@ function GameBoard() {
         }
     }, [missCheck])
 
+    // Trigger for getting leaderboard information from the backend
     useEffect(() => {
         setLeaderBoard
         if (serverMessageLog === "Game server ready...." && leaderBoard.length < 1) {
             stompClient.send("/app/leaderBoard", {}, JSON.stringify("Game start"));
-            stompClient.send("/app/ping", {}, JSON.stringify("Ping"));
-
         }
     }, [serverMessageLog]);
 
-
+    // Trims cell storage information to ensure data clarity
     useEffect(() => {
         const toTrim = cellStorage;
         if (toTrim.includes(savedName)) {
@@ -260,7 +245,7 @@ function GameBoard() {
         }
     }, [cellStorage]);
 
-
+    // Logic for deciding what players ship has been damaged for display
     useEffect(() => {
         if (!damageCheck.includes(savedName)) {
             setEnemyShipDamage(enemyShipDamage + damageCheck.slice(0, 2))
@@ -270,6 +255,7 @@ function GameBoard() {
         }
     }, [damageCheck]);
 
+    // Referances for states to ensure up-to-date information
     const gameFlashSave = useRef(gameFlash);
 
     const roomNumberSave = useRef(passwordEntry);
@@ -312,14 +298,16 @@ function GameBoard() {
         player2NameSave.current = player2Name
     }, [player2Name]);
 
+    // Checks a players name has been validated as correct
     const nameValidation = (message: any) => {
         if (message.includes(playerNameSave.current)) { 
             setNameValidated(true);}
     }
     
+    // Checks a room number is long enough and if so sends it to the backend
     const auth = () => {
         if (password.length < 4) {
-            stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Sorry room codes must be minimum of 4 characters long!"));
+            stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Sorry room numbers must be minimum of 4 characters long!"));
         }
         else {
             setPasswordEntry(password)
@@ -329,6 +317,7 @@ function GameBoard() {
         }
     }
 
+    // Sorts player information for display
     const sortPlayers = () => {
         if (player1Data.includes(playerNameSave.current)) {
             setPlayer1Data(player1Data)
@@ -342,6 +331,7 @@ function GameBoard() {
         }
     }
 
+    // Generates a random room number
     const generate = () => {
         const randomNumber = Math.floor(Math.random() * 10000)
         const roomNumber = randomNumber.toString().padStart(4, "0");
@@ -351,6 +341,7 @@ function GameBoard() {
         setLoading(true)
     }
 
+    // Checks a players name is within the character limits and if so sends it to the backend and starts the game creation process
     const saveName = () => {
         if (playerName.length < 5 || playerName.length > 12) {
             stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Sorry usernames must be between 5 and 12 characters long!"));
@@ -361,8 +352,9 @@ function GameBoard() {
             setReady("ready");
             setLoading(true)
         }
-
     }
+
+    // Sends chat to either the lobby or the game in process
     const chatSend = () => {
         if (gameFlashSave.current === 1) {
             stompClient.send("/app/globalChat", {}, JSON.stringify("[LOBBY] Guest: " + chatEntry));}
@@ -371,7 +363,7 @@ function GameBoard() {
         setChatEntry("")
     }
 
-    //test
+    // Parses data that is needed but is not intended for display, such game startup info or if a player has used the reset button
     const hiddenParse = (message: any) => {
         if (message.includes(roomNumberSave.current) && (!message.includes("Player left"))) {
         setHidden(message)}
@@ -379,6 +371,7 @@ function GameBoard() {
             setPlayerLeft(0)}
     }
 
+    // Parses chat data to ensure it is unique (random chat tokens are generated from the backend) and uses ship destroyed messages to check how many ships your opponent has lost
     const chatParse = (message: any) => {
         if (message === (chatStorageSave)){
             return;
@@ -396,7 +389,8 @@ function GameBoard() {
         setTimeout(() => {setChatStorage(message);
         }, 50);
     }
-        
+    
+    // Parses global chat data to ensure it is unique (random chat tokens are generated from the backend)
     const globalChatParse = (message: any) => {
         if (message === (chatStorageSave)){
             return;
@@ -412,6 +406,7 @@ function GameBoard() {
         }, 50);
     }
 
+    // Begins the restart process to purge information not needed from the backend/database connected to the backend
     const restart = () => {
         if (playerNameSave.current != "name") {
         stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));
@@ -421,6 +416,7 @@ function GameBoard() {
         location.reload();
     }
 
+    // Trigger for conditional styling of the server status
     const serverStatusStyle = () => {
         if (player1Data === "Player 1")
             return
@@ -429,7 +425,7 @@ function GameBoard() {
         }
     }
 
-
+    // Starts the process of begining a game against a computer opponent
     const playVsComputer = () => {
         const randomNumber = Math.floor(Math.random() * 9000) + 1000;
         const roomNumber = randomNumber.toString().padStart(4, "0");
@@ -439,6 +435,7 @@ function GameBoard() {
         setLoading(true)
     }
     
+    // Trigger for displaying the bug report entry
     const bugReporting = () => {
         if (bugReport === 0){
         setBugReport(1)}
@@ -446,12 +443,7 @@ function GameBoard() {
         setBugReport(0)
     }
 
-    const gameFlashScreen = () => {
-        if (gameFlash === 1){
-        setGameFlash(0);
-        sortPlayers()}
-    }
-
+    // Trigger for displaying the pre-game startup information
     const startUpFlashScreen = () => {
         if (startUpFlash === 0){
         setStartUpFlash(1)}
@@ -459,12 +451,26 @@ function GameBoard() {
         setStartUpFlash(0);
     }
 
+    // Trigger for displaying the game start information
+    const gameFlashScreen = () => {
+        if (gameFlash === 1){
+        setGameFlash(0);
+        sortPlayers()}
+    }
+
+    // Formats bug report information for sending tp the database connected to the backend and sends a message to confirm it has been sent
     const sendBugReport = () => {
         stompClient.send("/app/bugReport", {}, JSON.stringify("DATE: " + Date() + ", USER: " + savedName + ", REPORT: "  + bugReportInput));
         stompClient.send("/app/chat", {}, JSON.stringify(roomNumberSave.current + "Admin: Thank you, your message has been sent to the developer."));
         setBugReport(0)
     }
 
+    // Setting turn numbers for display
+    useEffect(() => {
+        setTurnNumber(turnNumber + 1)
+    }, [turn])
+
+    // Bug report entry
     const bugReportingRender = () => {
         return (
         <div className="bugReportPageFade">
@@ -482,7 +488,7 @@ function GameBoard() {
         )
     }
 
-    
+    // Pre-game startup information
     const startUpFlashRender = () => {
         return (
         <div className="bugReportPageFade">
@@ -507,6 +513,7 @@ function GameBoard() {
         )
     }
 
+    // Game start information
     const gameFlashRender = () => {
         return (
         <div className="bugReportPageFade">
@@ -534,6 +541,7 @@ function GameBoard() {
         )
     }
 
+    // Notifcation another player has used the reset button
     const playerLeftRender = () => {
         return (
         <div className="bugReportPageFade">
@@ -547,6 +555,7 @@ function GameBoard() {
         )
     }
 
+    // Displays the games winner
     const gameEndRender = () => {
     return (
         <div className="bugReportPageFade">
@@ -565,12 +574,12 @@ function GameBoard() {
         )
     }
 
-
     return (
         <>
             {bugReport === 1 ? bugReportingRender() : null}
             {playerLeft === 0 ? playerLeftRender() : null}
             {serverStatus == true && startUpFlash === 1 ? startUpFlashRender() : null}
+
             <div className={serverStatusStyle()}>
                 {loading === true ? <><LoadingSplash /></> : null}
                 {serverStatus == true ? <h5>Connected to game server</h5> :
@@ -581,7 +590,6 @@ function GameBoard() {
                 <h5>{serverMessageLog}</h5>
                 <button className="button" onClick={restart}>Restart</button>
                 <button className="button" onClick={bugReporting}>Bug Report/Msg Dev</button>
-
             </div>
             {hidden.includes("Server: Room saved!") && hidden.includes(roomNumberSave.current) && !hidden.includes("Server: Room synced") ?
                 <div className="startupOuter">
