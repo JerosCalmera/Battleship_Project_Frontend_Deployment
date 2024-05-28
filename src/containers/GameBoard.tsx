@@ -68,6 +68,7 @@ function GameBoard() {
     // WebSocket connection with error handling
     useEffect(() => {
         const connectToWebSocket = () => {
+        console.log("Connecting to WebSocket....")
         const socket = new SockJS(`${BASE_URL}/game`);
         const client = Stomp.over(socket);
 
@@ -191,7 +192,7 @@ function GameBoard() {
                 setTimeout(connectToWebSocket, 1000);
         });
 
-            client.ws.onclose = () => {
+            socket.onclose = () => {
                 (console.log("Connection closed"))
                 setServerStatus(false);
                 setTimeout(connectToWebSocket, 1000);
