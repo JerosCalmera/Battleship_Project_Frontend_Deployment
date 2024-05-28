@@ -466,7 +466,8 @@ function GameBoard() {
             stompClient.send("/app/chat", {}, JSON.stringify(roomNumberSave.current + "Admin: Thank you, your message has been sent to the developer."));}
         else {
         stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Thank you, your message has been sent to the developer."));}
-        setBugReport(0)
+        setBugReport(0);
+        setBugReportInput("");
     }
 
     // Setting turn numbers for display
