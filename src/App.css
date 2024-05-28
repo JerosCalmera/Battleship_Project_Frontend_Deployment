@@ -2,8 +2,8 @@ body {
   background-color: black;
   color: rgb(96, 193, 193);
   background-image: url(assets/backround.jpg);
-  background-size: 100vw 100vh;
-  background-repeat: no-repeat;
+  background-size: contain;
+  background-attachment: scroll;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
