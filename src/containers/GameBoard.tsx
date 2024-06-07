@@ -386,11 +386,11 @@ function GameBoard() {
             return;
         }
         if (gameFlashSave.current === 1 && nameValidated == true) {
-            stompClient.send("/app/globalChat", {}, JSON.stringify("[LOBBY] " + playerNameSave.current + " " + chatEntry));}
-        if (gameFlashSave.current === 1) {
+            stompClient.send("/app/globalChat", {}, JSON.stringify("[LOBBY] " + playerNameSave.current + ": " + chatEntry));}
+        else if (gameFlashSave.current === 1 && nameValidated == false) {
             stompClient.send("/app/globalChat", {}, JSON.stringify("[LOBBY] Guest: " + chatEntry));}
         else {
-            stompClient.send("/app/chat", {}, JSON.stringify(passwordEntry + savedName + ": " + chatEntry));}
+            stompClient.send("/app/chat", {}, JSON.stringify(passwordEntry + playerNameSave.current + ": " + chatEntry));}
         setChatEntry("")
     }
 
