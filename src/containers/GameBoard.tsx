@@ -385,6 +385,8 @@ function GameBoard() {
         if (chatEntry === "") {
             return;
         }
+        if (gameFlashSave.current === 1 && nameValidated == true) {
+            stompClient.send("/app/globalChat", {}, JSON.stringify("[LOBBY] " + playerNameSave.current + " " + chatEntry));}
         if (gameFlashSave.current === 1) {
             stompClient.send("/app/globalChat", {}, JSON.stringify("[LOBBY] Guest: " + chatEntry));}
         else {
