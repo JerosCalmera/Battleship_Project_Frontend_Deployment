@@ -280,7 +280,7 @@ function GameBoard() {
 
     useEffect(() => {
         roomNumberSave.current = passwordEntry
-    }, [turnNumber, chat, serverMessageLog, hidden, nameValidated]);
+    }, [turnNumber, chat, serverMessageLog, hidden]);
 
     useEffect(() => {
         playerNameSave.current = savedName
@@ -651,8 +651,8 @@ function GameBoard() {
             {hidden.includes("Server: Room saved!") && hidden.includes(roomNumberSave.current) && !hidden.includes("Server: Room synced") ?
                 <div className="startupOuter">
                     <h3 >Room number: {passwordEntry}</h3 >
-                    <h3>Waiting on other player.....</h3></div > : null}
-            {hidden.includes("Server: Room synced") && hidden.includes(roomNumberSave.current) ?
+                    <h3>Waiting on other player.....</h3></div >
+                : hidden.includes("Server: Room synced") && hidden.includes(roomNumberSave.current) ?
                     <div>
                         {gameFlash === 1 ? gameFlashRender() : null}
                         {winner != "unknown" ? gameEndRender() : null}
@@ -661,7 +661,7 @@ function GameBoard() {
                             player2Data={player2Data} savedName={savedName} shipInfo={shipInfo}
                             shipDamage={shipDamage} enemyShipDamage={enemyShipDamage}
                             stompClient={stompClient} />
-                    </div> : <><h2>{roomNumberSave.current}</h2></>}
+                    </div> : null}
 
             <StartUp handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hidden={hidden} chatEntry={chatEntry} ready={ready} password={password}
                 setPassword={setPassword} auth={auth} generate={generate} playerName={playerName} chat={chat}
