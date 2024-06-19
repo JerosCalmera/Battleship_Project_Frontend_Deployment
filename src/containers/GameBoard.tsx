@@ -651,8 +651,8 @@ function GameBoard() {
             {hidden.includes("Server: Room saved!") && hidden.includes(roomNumberSave.current) && !hidden.includes("Server: Room synced") ?
                 <div className="startupOuter">
                     <h3 >Room number: {passwordEntry}</h3 >
-                    <h3>Waiting on other player.....</h3></div >
-                : hidden.includes("Server: Room synced") && hidden.includes(roomNumberSave.current) ?
+                    <h3>Waiting on other player.....</h3></div > : null}
+            {hidden.includes("Server: Room synced") && hidden.includes(roomNumberSave.current) ?
                     <div>
                         {gameFlash === 1 ? gameFlashRender() : null}
                         {winner != "unknown" ? gameEndRender() : null}
