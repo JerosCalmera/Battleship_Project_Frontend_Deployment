@@ -43,7 +43,6 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
     useEffect(() => {
         const shipType = "CarrierBattleshipCruiserDestroyer";
         const ship = placedShip;
-        console.log(placedShip)
         if (ship.includes(shipType && savedName)) {
             if (ship.includes("Carrier")) { setCarrier(carrier - 1) }
             else if (ship.includes("Battleship")) { setBattleship(battleship - 1) }
@@ -209,7 +208,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
         setShipToPlace("Destroyer")
     }
 
-    // Notifys the backend that a player is ready and ends the ship placement phase for that player
+    // Notify the backend that a player is ready and ends the ship placement phase for that player
     const matchBegin = () => {
         stompClient.send("/app/matchStart", {}, JSON.stringify(savedName));
         setShipPlacement(true)

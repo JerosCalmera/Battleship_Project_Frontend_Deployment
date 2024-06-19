@@ -73,7 +73,6 @@ function GameBoard() {
 
         if (serverStatus != true) {
         client.connect({}, () => {
-            console.log("Connected to server");
             setServerStatus(true)
             setStompClient(client);
 
@@ -256,7 +255,7 @@ function GameBoard() {
         }
     }, [damageCheck]);
 
-    // Referances for states to ensure up-to-date information
+    // References for states to ensure up-to-date information
     const gameFlashSave = useRef(gameFlash);
 
     const roomNumberSave = useRef(passwordEntry);
@@ -441,7 +440,6 @@ function GameBoard() {
     const restart = () => {
         if (playerNameSave.current != "name") {
         stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));
-        console.log(playerNameSave.current)
         if (player2Name.includes("Computer")) {
         stompClient.send("/app/restart", {}, JSON.stringify(player2NameSave.current));}}
         location.reload();
@@ -456,7 +454,7 @@ function GameBoard() {
         }
     }
 
-    // Starts the process of begining a game against a computer opponent
+    // Starts the process of beginning a game against a computer opponent
     const playVsComputer = () => {
         const randomNumber = Math.floor(Math.random() * 9000) + 1000;
         const roomNumber = randomNumber.toString().padStart(4, "0");
@@ -582,7 +580,7 @@ function GameBoard() {
         )
     }
 
-    // Notifcation another player has used the reset button
+    // Notify the player another player has used the reset button
     const playerLeftRender = () => {
         return (
         <div className="bugReportPageFade">
