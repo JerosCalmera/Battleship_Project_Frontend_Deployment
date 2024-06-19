@@ -334,7 +334,7 @@ function GameBoard() {
         if (password.length < 4) {
             stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Sorry room numbers must be 4 numbers long!"));
         }
-        if (password.length > 4) {
+        else if (password.length > 4) {
             stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Sorry room numbers must be 4 numbers long!"));
         }
         else {
