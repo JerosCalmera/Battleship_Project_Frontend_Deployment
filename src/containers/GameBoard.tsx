@@ -622,7 +622,11 @@ function GameBoard() {
             startUpFlashScreen()
         }
         else {
-            gameFlashScreen()
+            if (gameFlash === 1){
+                setGameFlash(0);
+            } else {
+                setGameFlash(1)
+            }
         }
     }
 
