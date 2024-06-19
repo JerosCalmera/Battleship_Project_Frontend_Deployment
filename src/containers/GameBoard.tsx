@@ -401,7 +401,6 @@ function GameBoard() {
         if (message.includes(roomNumberSave.current) && (!message.includes("Player left"))) {
         setHidden(message)}
         if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (!message.includes(playerNameSave.current))) {
-            if (!player2Name.includes("Computer")){
             setPlayerLeft(0)}
     }
 
