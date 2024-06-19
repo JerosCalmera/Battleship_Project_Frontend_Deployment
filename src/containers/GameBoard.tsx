@@ -439,7 +439,7 @@ function GameBoard() {
         }, 50);
     }
 
-    // Begins the restart process to purge information not needed from the backend/database connected to the backend
+    // Begins the restart process to purge information not needed from the database connected to the backend
     const restart = () => {
         if (playerNameSave.current != "name") {
         stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));
@@ -616,6 +616,16 @@ function GameBoard() {
         )
     }
 
+    // Displays help splashes
+    const help = () => {
+        if (!hidden.includes("Server: Room synced") || hidden.includes("Server: Room saved!")) {
+            startUpFlashScreen()
+        }
+        else {
+            gameFlashScreen()
+        }
+    }
+
     return (
         <>
             {bugReport === 1 ? bugReportingRender() : null}
@@ -632,6 +642,7 @@ function GameBoard() {
                 <h5>{serverMessageLog}</h5>
                 <button className="button" onClick={restart}>Restart</button>
                 <button className="button" onClick={bugReporting}>Bug Report/Msg Dev</button>
+                <button className="button" onClick={help}>Help</button>
             </div>
             {hidden.includes("Server: Room saved!") && hidden.includes(roomNumberSave.current) && !hidden.includes("Server: Room synced") ?
                 <div className="startupOuter">
