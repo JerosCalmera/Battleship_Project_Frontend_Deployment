@@ -400,7 +400,7 @@ function GameBoard() {
     // Parses data that is needed but is not intended for display, such game startup info or if a player has used the reset button
     const hiddenParse = (message: any) => {
         if (message.includes(roomNumberSave.current) && (!message.includes("Player left"))) {
-        setHidden(message)}
+        setHidden(prevHidden => message)}
         if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (reset != 1)) {
             setPlayerLeft(0)}
     }
