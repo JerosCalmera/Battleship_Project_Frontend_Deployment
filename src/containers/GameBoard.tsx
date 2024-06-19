@@ -271,8 +271,6 @@ function GameBoard() {
 
     const chatStorageSave = useRef(chatStorage);
 
-    const hiddenSave = useRef(hidden);
-
     useEffect(() => {
         gameFlashSave.current = gameFlash
     }, [chat, hidden, gameFlash]);
@@ -300,10 +298,6 @@ function GameBoard() {
     useEffect(() => {
         player2NameSave.current = player2Name
     }, [player2Name]);
-
-    useEffect(() => {
-        hiddenSave.current = hidden
-    }, [hidden, chat, serverStatus]);
 
     // Allows for text to be sent to an input using the enter key
     const handleChatEnterPress = (e:any) => {
@@ -656,11 +650,11 @@ function GameBoard() {
                 <button className="button" onClick={bugReporting}>Bug Report/Msg Dev</button>
                 <button className="button" onClick={help}>Help</button>
             </div>
-            {hiddenSave.current.includes("Server: Room saved!") && hiddenSave.current.includes(roomNumberSave.current) && !hiddenSave.current.includes("Server: Room synced") ?
+            {hidden.includes("Server: Room saved!") && hidden.includes(roomNumberSave.current) && !hidden.includes("Server: Room synced") ?
                 <div className="startupOuter">
                     <h3 >Room number: {passwordEntry}</h3 >
                     <h3>Waiting on other player.....</h3></div >
-                : hiddenSave.current.includes("Server: Room synced") && hiddenSave.current.includes(roomNumberSave.current) ?
+                : hidden.includes("Server: Room synced") && hidden.includes(roomNumberSave.current) ?
                     <div>
                         {gameFlash === 1 ? gameFlashRender() : null}
                         {winner != "unknown" ? gameEndRender() : null}
