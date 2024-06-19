@@ -656,7 +656,7 @@ function GameBoard() {
                 <button className="button" onClick={bugReporting}>Bug Report/Msg Dev</button>
                 <button className="button" onClick={help}>Help</button>
             </div>
-            {hiddenSave.current.includes("Server: Room saved!") && hiddenSave.current.includes(roomNumberSave.current) && !hidden.includes("Server: Room synced") ?
+            {hiddenSave.current.includes("Server: Room saved!") && hiddenSave.current.includes(roomNumberSave.current) && !hiddenSave.current.includes("Server: Room synced") ?
                 <div className="startupOuter">
                     <h3 >Room number: {passwordEntry}</h3 >
                     <h3>Waiting on other player.....</h3></div >
