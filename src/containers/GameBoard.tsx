@@ -64,6 +64,7 @@ function GameBoard() {
     const [chatStorage, setChatStorage] = useState<string>("empty")
 
     const [loading, setLoading] = useState<boolean>(false)
+    const [reset, setReset] = useState<number>(0)
 
     // WebSocket connection with error handling
     useEffect(() => {
@@ -400,7 +401,7 @@ function GameBoard() {
     const hiddenParse = (message: any) => {
         if (message.includes(roomNumberSave.current) && (!message.includes("Player left"))) {
         setHidden(message)}
-        if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (!message.includes(playerNameSave.current))) {
+        if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (reset != 1)) {
             setPlayerLeft(0)}
     }
 
@@ -441,6 +442,7 @@ function GameBoard() {
 
     // Begins the restart process to purge information not needed from the database connected to the backend
     const restart = () => {
+        setReset(1);
         if (playerNameSave.current != "name") {
         stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));
         if (player2Name.includes("Computer")) {
