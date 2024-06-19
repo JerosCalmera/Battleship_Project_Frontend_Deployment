@@ -635,6 +635,7 @@ function GameBoard() {
     return (
         <>
             {bugReport === 1 ? bugReportingRender() : null}
+            <h5>Hidden:</h5>{hidden}
             {playerLeft === 0 ? playerLeftRender() : null}
             {serverStatus == true && startUpFlash === 1 ? startUpFlashRender() : null}
 
