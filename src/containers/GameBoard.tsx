@@ -332,7 +332,10 @@ function GameBoard() {
     // Checks a room number is long enough and if so sends it to the backend
     const auth = () => {
         if (password.length < 4) {
-            stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Sorry room numbers must be minimum of 4 characters long!"));
+            stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Sorry room numbers must be 4 numbers long!"));
+        }
+        if (password.length > 4) {
+            stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Sorry room numbers must be 4 numbers long!"));
         }
         else {
             setPasswordEntry(password)
