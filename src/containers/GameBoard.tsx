@@ -661,7 +661,7 @@ function GameBoard() {
                             player2Data={player2Data} savedName={savedName} shipInfo={shipInfo}
                             shipDamage={shipDamage} enemyShipDamage={enemyShipDamage}
                             stompClient={stompClient} />
-                    </div> : null}
+                    </div> : <><h2>{roomNumberSave.current}</h2></>}
 
             <StartUp handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hidden={hidden} chatEntry={chatEntry} ready={ready} password={password}
                 setPassword={setPassword} auth={auth} generate={generate} playerName={playerName} chat={chat}
