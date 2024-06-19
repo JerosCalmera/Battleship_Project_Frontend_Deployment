@@ -675,10 +675,10 @@ function GameBoard() {
                             stompClient={stompClient} />
                     </div> : null}
 
-            <StartUp roomSaved={roomSaved} handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hidden={hidden} chatEntry={chatEntry} ready={ready} password={password}
+            {roomSynced != 1 ? <StartUp handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hidden={hidden} chatEntry={chatEntry} ready={ready} password={password}
                 setPassword={setPassword} auth={auth} generate={generate} playerName={playerName} chat={chat}
                 saveName={saveName} chatSend={chatSend} setPlayerName={setPlayerName} setChatEntry={setChatEntry}
-                leaderBoard={leaderBoard} />
+                leaderBoard={leaderBoard}></StartUp> : null};
         </>
     )
     }

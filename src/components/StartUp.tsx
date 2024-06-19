@@ -10,7 +10,6 @@ interface Props {
     handleAuthEnterPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     handleSaveNameEnterPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     handleChatEnterPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    roomSaved: number;
     playerName: string;
     ready: string;
     hidden: string;
@@ -24,7 +23,7 @@ interface Props {
     player1Data: string;
 }
 
-const StartUp: React.FC<Props> = ({ roomSaved, handleAuthEnterPress, handleSaveNameEnterPress, handleChatEnterPress, player1Data, nameValidated, roomNumberSave, hidden, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
+const StartUp: React.FC<Props> = ({ handleAuthEnterPress, handleSaveNameEnterPress, handleChatEnterPress, player1Data, nameValidated, roomNumberSave, hidden, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
 
     // Chatbox conditional styling
     const chatBox = () => {
@@ -37,7 +36,7 @@ const StartUp: React.FC<Props> = ({ roomSaved, handleAuthEnterPress, handleSaveN
 
     return (
         <>
-            {nameValidated === true && roomSaved != 1 && !hidden.includes("Server: Room saved!") && !hidden.includes(roomNumberSave.current) ?
+            {nameValidated === true && !hidden.includes("Server: Room saved!") && !hidden.includes(roomNumberSave.current) ?
                 <div className="startupOuter">
                     <h3>Please enter or generate a room code, or play against the computer</h3>
                     <input 
