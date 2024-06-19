@@ -66,6 +66,9 @@ function GameBoard() {
     const [loading, setLoading] = useState<boolean>(false)
     const [reset, setReset] = useState<number>(0)
 
+    const [roomSaved, setRoomSaved] = useState<number>(0)
+    const [roomSynced, setRoomSynced] = useState<number>(0)
+
     // WebSocket connection with error handling
     useEffect(() => {
         const connectToWebSocket = () => {
@@ -399,12 +402,14 @@ function GameBoard() {
 
     // Parses data that is needed but is not intended for display, such game startup info or if a player has used the reset button
     const hiddenParse = (message: any) => {
-        setHidden(prevHidden => {
-            if (message.includes(roomNumberSave.current) && (!message.includes("Player left"))) {
-                return message;
-            }
-            return prevHidden;
-        });
+        if (message.includes("Server: Room saved!") && roomNumberSave.current) {
+            setRoomSaved(1)
+        }
+        if (message.includes("Server: Room synced") && roomNumberSave.current) {
+            setRoomSynced(1)
+        }
+        if (message.includes(roomNumberSave.current) && (!message.includes("Player left"))) {
+        setHidden(message)}
         if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (reset != 1)) {
             setPlayerLeft(0)}
     }
@@ -654,11 +659,11 @@ function GameBoard() {
                 <button className="button" onClick={bugReporting}>Bug Report/Msg Dev</button>
                 <button className="button" onClick={help}>Help</button>
             </div>
-            {hidden.includes("Server: Room saved!") && hidden.includes(roomNumberSave.current) && !hidden.includes("Server: Room synced") ?
+            {roomSaved === 1 ?
                 <div className="startupOuter">
                     <h3 >Room number: {passwordEntry}</h3 >
                     <h3>Waiting on other player.....</h3></div >
-                : hidden.includes("Server: Room synced") && hidden.includes(roomNumberSave.current) ?
+                : roomSynced === 1 ?
                     <div>
                         {gameFlash === 1 ? gameFlashRender() : null}
                         {winner != "unknown" ? gameEndRender() : null}
