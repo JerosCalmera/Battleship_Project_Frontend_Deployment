@@ -64,10 +64,6 @@ function GameBoard() {
     const [chatStorage, setChatStorage] = useState<string>("empty")
 
     const [loading, setLoading] = useState<boolean>(false)
-    const [reset, setReset] = useState<number>(0)
-
-    const [roomSaved, setRoomSaved] = useState<number>(0)
-    const [roomSynced, setRoomSynced] = useState<number>(0)
 
     // WebSocket connection with error handling
     useEffect(() => {
@@ -402,16 +398,9 @@ function GameBoard() {
 
     // Parses data that is needed but is not intended for display, such game startup info or if a player has used the reset button
     const hiddenParse = (message: any) => {
-        if (message.includes("Server: Room saved!") && message.includes(roomNumberSave.current)) {
-            setRoomSaved(1);
-        }
-        if (message.includes("Server: Room synced") && message.includes(roomNumberSave.current)) {
-            setRoomSaved(0);
-            setRoomSynced(1);
-        }
         if (message.includes(roomNumberSave.current) && (!message.includes("Player left"))) {
         setHidden(message)}
-        if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (reset != 1)) {
+        if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (!message.includes(playerNameSave.current))) {
             setPlayerLeft(0)}
     }
 
@@ -452,7 +441,6 @@ function GameBoard() {
 
     // Begins the restart process to purge information not needed from the database connected to the backend
     const restart = () => {
-        setReset(1);
         if (playerNameSave.current != "name") {
         stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));
         if (player2Name.includes("Computer")) {
@@ -660,11 +648,11 @@ function GameBoard() {
                 <button className="button" onClick={bugReporting}>Bug Report/Msg Dev</button>
                 <button className="button" onClick={help}>Help</button>
             </div>
-            {roomSaved === 1 ?
+            {hidden.includes("Server: Room saved!") && hidden.includes(roomNumberSave.current) && !hidden.includes("Server: Room synced") ?
                 <div className="startupOuter">
                     <h3 >Room number: {passwordEntry}</h3 >
                     <h3>Waiting on other player.....</h3></div >
-                : roomSynced === 1 ?
+                : hidden.includes("Server: Room synced") && hidden.includes(roomNumberSave.current) ?
                     <div>
                         {gameFlash === 1 ? gameFlashRender() : null}
                         {winner != "unknown" ? gameEndRender() : null}
@@ -675,10 +663,10 @@ function GameBoard() {
                             stompClient={stompClient} />
                     </div> : null}
 
-            {roomSynced != 1 ? <StartUp handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hidden={hidden} chatEntry={chatEntry} ready={ready} password={password}
+            <StartUp handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hidden={hidden} chatEntry={chatEntry} ready={ready} password={password}
                 setPassword={setPassword} auth={auth} generate={generate} playerName={playerName} chat={chat}
                 saveName={saveName} chatSend={chatSend} setPlayerName={setPlayerName} setChatEntry={setChatEntry}
-                leaderBoard={leaderBoard}></StartUp> : null};
+                leaderBoard={leaderBoard} />
         </>
     )
     }
