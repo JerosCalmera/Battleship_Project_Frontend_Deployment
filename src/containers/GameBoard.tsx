@@ -270,6 +270,8 @@ function GameBoard() {
 
     const chatStorageSave = useRef(chatStorage);
 
+    const hiddenSave = useRef(hidden);
+
     useEffect(() => {
         gameFlashSave.current = gameFlash
     }, [chat, hidden, gameFlash]);
@@ -297,6 +299,10 @@ function GameBoard() {
     useEffect(() => {
         player2NameSave.current = player2Name
     }, [player2Name]);
+
+    useEffect(() => {
+        hiddenSave.current = hidden
+    }, [serverStatus, hidden]);
 
     // Allows for text to be sent to an input using the enter key
     const handleChatEnterPress = (e:any) => {
@@ -618,7 +624,7 @@ function GameBoard() {
 
     // Displays help splashes
     const help = () => {
-        if (!hidden.includes("Server: Room synced") || hidden.includes("Server: Room saved!")) {
+        if (!hiddenSave.current.includes("Server: Room synced") || hiddenSave.current.includes("Server: Room saved!")) {
             startUpFlashScreen()
         }
         else {
@@ -648,11 +654,11 @@ function GameBoard() {
                 <button className="button" onClick={bugReporting}>Bug Report/Msg Dev</button>
                 <button className="button" onClick={help}>Help</button>
             </div>
-            {hidden.includes("Server: Room saved!") && hidden.includes(roomNumberSave.current) && !hidden.includes("Server: Room synced") ?
+            {hiddenSave.current.includes("Server: Room saved!") && hiddenSave.current.includes(roomNumberSave.current) && !hiddenSave.current.includes("Server: Room synced") ?
                 <div className="startupOuter">
                     <h3 >Room number: {passwordEntry}</h3 >
                     <h3>Waiting on other player.....</h3></div >
-                : hidden.includes("Server: Room synced") && hidden.includes(roomNumberSave.current) ?
+                : hiddenSave.current.includes("Server: Room synced") && hiddenSave.current.includes(roomNumberSave.current) ?
                     <div>
                         {gameFlash === 1 ? gameFlashRender() : null}
                         {winner != "unknown" ? gameEndRender() : null}
@@ -663,7 +669,7 @@ function GameBoard() {
                             stompClient={stompClient} />
                     </div> : null}
 
-            <StartUp handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hidden={hidden} chatEntry={chatEntry} ready={ready} password={password}
+            <StartUp handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hiddenSave={hiddenSave} chatEntry={chatEntry} ready={ready} password={password}
                 setPassword={setPassword} auth={auth} generate={generate} playerName={playerName} chat={chat}
                 saveName={saveName} chatSend={chatSend} setPlayerName={setPlayerName} setChatEntry={setChatEntry}
                 leaderBoard={leaderBoard} />

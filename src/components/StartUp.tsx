@@ -12,7 +12,7 @@ interface Props {
     handleChatEnterPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     playerName: string;
     ready: string;
-    hidden: string;
+    hiddenSave: any;
     chat: string[];
     chatEntry: string;
     chatSend: () => void;
@@ -23,7 +23,7 @@ interface Props {
     player1Data: string;
 }
 
-const StartUp: React.FC<Props> = ({ handleAuthEnterPress, handleSaveNameEnterPress, handleChatEnterPress, player1Data, nameValidated, roomNumberSave, hidden, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
+const StartUp: React.FC<Props> = ({ handleAuthEnterPress, handleSaveNameEnterPress, handleChatEnterPress, player1Data, nameValidated, roomNumberSave, hiddenSave, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
 
     // Chatbox conditional styling
     const chatBox = () => {
@@ -36,7 +36,7 @@ const StartUp: React.FC<Props> = ({ handleAuthEnterPress, handleSaveNameEnterPre
 
     return (
         <>
-            {nameValidated === true && !hidden.includes("Server: Room saved!") && !hidden.includes(roomNumberSave.current) ?
+            {nameValidated === true && !hiddenSave.current.includes("Server: Room saved!") && !hiddenSave.current.includes(roomNumberSave.current) ?
                 <div className="startupOuter">
                     <h3>Please enter or generate a room code, or play against the computer</h3>
                     <input 
@@ -83,7 +83,7 @@ const StartUp: React.FC<Props> = ({ handleAuthEnterPress, handleSaveNameEnterPre
                     <button className="button" onClick={chatSend}>Send</button>
                 </div>
             </div>
-            {!hidden.includes("Server: Room synced") ?
+            {!hiddenSave.current.includes("Server: Room synced") ?
                 <div className="leaderBoardOuter">
                     <div className="leaderBoard">
                         <h3>Top 10 Players:</h3>
