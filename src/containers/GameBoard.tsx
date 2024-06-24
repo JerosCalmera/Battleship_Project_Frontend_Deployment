@@ -83,7 +83,9 @@ function GameBoard() {
                 setServerStatus(true)
             });
             client.subscribe("/topic/hidden", (message: any) => {
-                hiddenParse(message.body.slice(12, -2));
+                const newMessage: string = message.body.slice(12, -2)
+                if (newMessage.includes(roomNumberSave.current)) {
+                hiddenParse(message.body.slice(12, -2));}
             });
             client.subscribe("/topic/nameValidated", (message: any) => {
                 nameValidation(message.body.slice(12, -2));
@@ -400,11 +402,11 @@ function GameBoard() {
 
     // Parses data that is needed but is not intended for display, such game startup info or if a player has used the reset button
     const hiddenParse = (message: any) => {
-        if (message.includes(roomNumberSave.current) && (message.includes("Server: Room saved!"))) {
+        if (message.includes("Server: Room saved!")) {
             setRoomSaved(true)}
-        else if (message.includes(roomNumberSave.current) && (message.includes("Server: Room saved!"))) {
+        else if (message.includes("Server: Room saved!")) {
             setRoomSynced(true)}
-        else if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (!message.includes(playerNameSave.current))) {
+        else if (message.includes("Player left") && (!message.includes(playerNameSave.current))) {
             setPlayerLeft(0)}
     }
 
