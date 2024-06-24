@@ -280,7 +280,7 @@ function GameBoard() {
 
     useEffect(() => {
         roomNumberSave.current = passwordEntry
-    }, [turnNumber, chat, serverMessageLog, hidden]);
+    }, [hidden]);
 
     useEffect(() => {
         playerNameSave.current = savedName
