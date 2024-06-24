@@ -400,9 +400,9 @@ function GameBoard() {
 
     // Parses data that is needed but is not intended for display, such game startup info or if a player has used the reset button
     const hiddenParse = (message: any) => {
-        if (message.includes(roomNumberSave.current) && (message.includes("Room Saved"))) {
+        if (message.includes(roomNumberSave.current) && (message.includes("Server: Room saved!"))) {
             setRoomSaved(true)}
-        else if (message.includes(roomNumberSave.current) && (message.includes("Room synced!"))) {
+        else if (message.includes(roomNumberSave.current) && (message.includes("Server: Room saved!"))) {
             setRoomSynced(true)}
         else if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (!message.includes(playerNameSave.current))) {
             setPlayerLeft(0)}
@@ -665,7 +665,7 @@ function GameBoard() {
                             player2Data={player2Data} savedName={savedName} shipInfo={shipInfo}
                             shipDamage={shipDamage} enemyShipDamage={enemyShipDamage}
                             stompClient={stompClient} />
-                    </div> : <h2>loading</h2>}
+                    </div> : {roomNumberSave}}
 
             <StartUp roomSynced={roomSynced} roomSaved={roomSaved} handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} nameValidated={nameValidated} playVsComputer={playVsComputer} chatEntry={chatEntry} ready={ready} password={password}
                 setPassword={setPassword} auth={auth} generate={generate} playerName={playerName} chat={chat}
