@@ -411,7 +411,7 @@ function GameBoard() {
         setHidden(message)}
         if (message.includes(roomNumberSave.current) && (message.includes("Room Saved"))) {
             setRoomSaved(true)}
-        if (message.includes(roomNumberSave.current) && (message.includes("Rooms Synced"))) {
+        if (message.includes(roomNumberSave.current) && (message.includes("Room synced!"))) {
             setRoomSynced(true)}
         if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (!message.includes(playerNameSave.current))) {
             setPlayerLeft(0)}
@@ -674,7 +674,7 @@ function GameBoard() {
                             player2Data={player2Data} savedName={savedName} shipInfo={shipInfo}
                             shipDamage={shipDamage} enemyShipDamage={enemyShipDamage}
                             stompClient={stompClient} />
-                    </div> : null}
+                    </div> : <h2>loading</h2>}
 
             <StartUp roomSaved={roomSaved} handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} nameValidated={nameValidated} playVsComputer={playVsComputer} hiddenSave={hiddenSave} chatEntry={chatEntry} ready={ready} password={password}
                 setPassword={setPassword} auth={auth} generate={generate} playerName={playerName} chat={chat}
