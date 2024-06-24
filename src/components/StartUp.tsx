@@ -36,7 +36,7 @@ const StartUp: React.FC<Props> = ({roomSaved, roomSynced, handleAuthEnterPress, 
 
     return (
         <>
-            {nameValidated === true && roomSaved == false ?
+            {nameValidated === true && roomSaved == false && roomSynced == false ?
                 <div className="startupOuter">
                     <h3>Please enter or generate a room code, or play against the computer</h3>
                     <input 
