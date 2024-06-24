@@ -12,7 +12,6 @@ interface Props {
     handleChatEnterPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     playerName: string;
     ready: string;
-    hiddenSave: any;
     chat: string[];
     chatEntry: string;
     chatSend: () => void;
@@ -20,10 +19,11 @@ interface Props {
     leaderBoard: string[];
     nameValidated: boolean;
     roomSaved: boolean;
+    roomSynced: boolean;
     player1Data: string;
 }
 
-const StartUp: React.FC<Props> = ({roomSaved, handleAuthEnterPress, handleSaveNameEnterPress, handleChatEnterPress, player1Data, nameValidated, hiddenSave, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
+const StartUp: React.FC<Props> = ({roomSaved, roomSynced, handleAuthEnterPress, handleSaveNameEnterPress, handleChatEnterPress, player1Data, nameValidated, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
 
     // Chatbox conditional styling
     const chatBox = () => {
@@ -83,7 +83,7 @@ const StartUp: React.FC<Props> = ({roomSaved, handleAuthEnterPress, handleSaveNa
                     <button className="button" onClick={chatSend}>Send</button>
                 </div>
             </div>
-            {!hiddenSave.current.includes("Server: Room synced") ?
+            {roomSynced == false ?
                 <div className="leaderBoardOuter">
                     <div className="leaderBoard">
                         <h3>Top 10 Players:</h3>

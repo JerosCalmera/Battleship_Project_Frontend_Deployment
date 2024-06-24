@@ -14,7 +14,6 @@ function GameBoard() {
     const [serverStatus, setServerStatus] = useState(false)
     const [attemptReconnect, setAttemptReconnect] = useState(0)
     const [serverMessageLog, serverSetMessageLog] = useState("")
-    const [hidden, setHidden] = useState("")
 
     const [leaderBoard, setLeaderBoard] = useState<string[]>([])
 
@@ -219,7 +218,7 @@ function GameBoard() {
         if (loading == true) {
             setLoading(false)
         }
-    }, [hidden, nameValidated, serverMessageLog])
+    }, [nameValidated, serverMessageLog])
 
     // Logic for checking who a missed shot belongs to for display
     useEffect(() => {
@@ -273,11 +272,9 @@ function GameBoard() {
 
     const chatStorageSave = useRef(chatStorage);
 
-    const hiddenSave = useRef(hidden);
-
     useEffect(() => {
         gameFlashSave.current = gameFlash
-    }, [chat, hidden, gameFlash]);
+    }, [chat, gameFlash]);
 
     useEffect(() => {
         leaderBoardSave.current = leaderBoard
@@ -285,7 +282,7 @@ function GameBoard() {
 
     useEffect(() => {
         roomNumberSave.current = passwordEntry
-    }, [turnNumber, chat, serverMessageLog, hidden]);
+    }, [turnNumber, chat, serverMessageLog]);
 
     useEffect(() => {
         playerNameSave.current = savedName
@@ -302,10 +299,6 @@ function GameBoard() {
     useEffect(() => {
         player2NameSave.current = player2Name
     }, [player2Name]);
-
-    useEffect(() => {
-        hiddenSave.current = hidden
-    }, [serverStatus, hidden]);
 
     // Allows for text to be sent to an input using the enter key
     const handleChatEnterPress = (e:any) => {
@@ -407,13 +400,11 @@ function GameBoard() {
 
     // Parses data that is needed but is not intended for display, such game startup info or if a player has used the reset button
     const hiddenParse = (message: any) => {
-        if (message.includes(roomNumberSave.current) && (!message.includes("Player left"))) {
-        setHidden(message)}
         if (message.includes(roomNumberSave.current) && (message.includes("Room Saved"))) {
             setRoomSaved(true)}
-        if (message.includes(roomNumberSave.current) && (message.includes("Room synced!"))) {
+        else if (message.includes(roomNumberSave.current) && (message.includes("Room synced!"))) {
             setRoomSynced(true)}
-        if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (!message.includes(playerNameSave.current))) {
+        else if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (!message.includes(playerNameSave.current))) {
             setPlayerLeft(0)}
     }
 
@@ -631,7 +622,7 @@ function GameBoard() {
 
     // Displays help splashes
     const help = () => {
-        if (!hiddenSave.current.includes("Server: Room synced") || hiddenSave.current.includes("Server: Room saved!")) {
+        if (roomSynced == false|| roomSaved == true) {
             startUpFlashScreen()
         }
         else {
@@ -676,7 +667,7 @@ function GameBoard() {
                             stompClient={stompClient} />
                     </div> : <h2>loading</h2>}
 
-            <StartUp roomSaved={roomSaved} handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} nameValidated={nameValidated} playVsComputer={playVsComputer} hiddenSave={hiddenSave} chatEntry={chatEntry} ready={ready} password={password}
+            <StartUp roomSynced={roomSynced} roomSaved={roomSaved} handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} nameValidated={nameValidated} playVsComputer={playVsComputer} chatEntry={chatEntry} ready={ready} password={password}
                 setPassword={setPassword} auth={auth} generate={generate} playerName={playerName} chat={chat}
                 saveName={saveName} chatSend={chatSend} setPlayerName={setPlayerName} setChatEntry={setChatEntry}
                 leaderBoard={leaderBoard} />
