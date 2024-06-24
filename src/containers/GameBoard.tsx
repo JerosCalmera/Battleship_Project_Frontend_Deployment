@@ -411,7 +411,7 @@ function GameBoard() {
         setHidden(message)}
         if (message.includes(roomNumberSave.current) && (message.includes("Room Saved"))) {
             setRoomSaved(true)}
-        if (message.includes(roomNumberSave.current) && (message.includes("Room Synced"))) {
+        if (message.includes(roomNumberSave.current) && (message.includes("Rooms Synced"))) {
             setRoomSynced(true)}
         if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (!message.includes(playerNameSave.current))) {
             setPlayerLeft(0)}
