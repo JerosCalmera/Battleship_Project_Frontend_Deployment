@@ -19,11 +19,13 @@ interface Props {
     setChatEntry: React.Dispatch<React.SetStateAction<string>>;
     leaderBoard: string[];
     nameValidated: boolean;
+    roomSaved: boolean;
+    roomSynced: boolean;
     roomNumberSave: any;
     player1Data: string;
 }
 
-const StartUp: React.FC<Props> = ({ handleAuthEnterPress, handleSaveNameEnterPress, handleChatEnterPress, player1Data, nameValidated, roomNumberSave, hiddenSave, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
+const StartUp: React.FC<Props> = ({roomSaved, roomSynced, handleAuthEnterPress, handleSaveNameEnterPress, handleChatEnterPress, player1Data, nameValidated, roomNumberSave, hiddenSave, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
 
     // Chatbox conditional styling
     const chatBox = () => {
@@ -36,7 +38,7 @@ const StartUp: React.FC<Props> = ({ handleAuthEnterPress, handleSaveNameEnterPre
 
     return (
         <>
-            {nameValidated === true && !hiddenSave.current.includes("Server: Room saved!") && !hiddenSave.current.includes(roomNumberSave.current) ?
+            {nameValidated === true && roomSaved == false ?
                 <div className="startupOuter">
                     <h3>Please enter or generate a room code, or play against the computer</h3>
                     <input 

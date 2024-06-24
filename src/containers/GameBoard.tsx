@@ -38,6 +38,9 @@ function GameBoard() {
     const [savedName, setSaveName] = useState<string>("name")
     const [ready, setReady] = useState<string>("name")
 
+    const [roomSaved, setRoomSaved] = useState<boolean>(false)
+    const [roomSynced, setRoomSynced] = useState<boolean>(false)
+
     const [chat, setChat] = useState<string[]>(["", "", "", "", "", "", "", "", "", ""])
     const [chatEntry, setChatEntry] = useState<string>("")
 
@@ -282,7 +285,7 @@ function GameBoard() {
 
     useEffect(() => {
         roomNumberSave.current = passwordEntry
-    }, [hidden]);
+    }, [turnNumber, chat, serverMessageLog, hidden]);
 
     useEffect(() => {
         playerNameSave.current = savedName
@@ -406,6 +409,10 @@ function GameBoard() {
     const hiddenParse = (message: any) => {
         if (message.includes(roomNumberSave.current) && (!message.includes("Player left"))) {
         setHidden(message)}
+        if (message.includes(roomNumberSave.current) && (message.includes("Room Saved"))) {
+            setRoomSaved(true)}
+        if (message.includes(roomNumberSave.current) && (message.includes("Room Synced"))) {
+            setRoomSynced(true)}
         if (message.includes(roomNumberSave.current) && (message.includes("Player left")) && (!message.includes(playerNameSave.current))) {
             setPlayerLeft(0)}
     }
@@ -654,11 +661,11 @@ function GameBoard() {
                 <button className="button" onClick={bugReporting}>Bug Report/Msg Dev</button>
                 <button className="button" onClick={help}>Help</button>
             </div>
-            {hiddenSave.current.includes("Server: Room saved!") && hiddenSave.current.includes(roomNumberSave.current) && !hiddenSave.current.includes("Server: Room synced") ?
+            {roomSaved == true && roomSynced == false ?
                 <div className="startupOuter">
                     <h3 >Room number: {passwordEntry}</h3 >
                     <h3>Waiting on other player.....</h3></div >
-                : hiddenSave.current.includes("Server: Room synced") && hiddenSave.current.includes(roomNumberSave.current) ?
+                : roomSynced == true ?
                     <div>
                         {gameFlash === 1 ? gameFlashRender() : null}
                         {winner != "unknown" ? gameEndRender() : null}
@@ -669,7 +676,7 @@ function GameBoard() {
                             stompClient={stompClient} />
                     </div> : null}
 
-            <StartUp handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hiddenSave={hiddenSave} chatEntry={chatEntry} ready={ready} password={password}
+            <StartUp roomSaved={roomSaved} roomSynced={roomSynced} handleAuthEnterPress={handleAuthEnterPress} handleSaveNameEnterPress={handleSaveNameEnterPress} handleChatEnterPress={handleChatEnterPress} player1Data={player1Data} roomNumberSave={roomNumberSave} nameValidated={nameValidated} playVsComputer={playVsComputer} hiddenSave={hiddenSave} chatEntry={chatEntry} ready={ready} password={password}
                 setPassword={setPassword} auth={auth} generate={generate} playerName={playerName} chat={chat}
                 saveName={saveName} chatSend={chatSend} setPlayerName={setPlayerName} setChatEntry={setChatEntry}
                 leaderBoard={leaderBoard} />
