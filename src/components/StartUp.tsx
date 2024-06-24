@@ -20,12 +20,10 @@ interface Props {
     leaderBoard: string[];
     nameValidated: boolean;
     roomSaved: boolean;
-    roomSynced: boolean;
-    roomNumberSave: any;
     player1Data: string;
 }
 
-const StartUp: React.FC<Props> = ({roomSaved, roomSynced, handleAuthEnterPress, handleSaveNameEnterPress, handleChatEnterPress, player1Data, nameValidated, roomNumberSave, hiddenSave, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
+const StartUp: React.FC<Props> = ({roomSaved, handleAuthEnterPress, handleSaveNameEnterPress, handleChatEnterPress, player1Data, nameValidated, hiddenSave, playVsComputer, chatEntry, setPlayerName, saveName, password, setPassword, auth, generate, playerName, chat, chatSend, setChatEntry, leaderBoard }) => {
 
     // Chatbox conditional styling
     const chatBox = () => {
