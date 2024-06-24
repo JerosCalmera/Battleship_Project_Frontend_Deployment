@@ -404,9 +404,9 @@ function GameBoard() {
     const hiddenParse = (message: any) => {
         if (message.includes("Server: Room saved!")) {
             setRoomSaved(true)}
-        else if (message.includes("Server: Room synced")) {
+        if (message.includes("Server: Room synced")) {
             setRoomSynced(true)}
-        else if (message.includes("Player left") && (!message.includes(playerNameSave.current))) {
+        if (message.includes("Player left") && (!message.includes(playerNameSave.current))) {
             setPlayerLeft(0)}
     }
 
