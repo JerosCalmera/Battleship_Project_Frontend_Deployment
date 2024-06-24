@@ -238,7 +238,7 @@ function GameBoard() {
         if (serverMessageLog === "Game server ready...." && leaderBoard.length < 1) {
             stompClient.send("/app/leaderBoard", {}, JSON.stringify("Game start"));
         }
-    }, [serverMessageLog]);
+    }, []);
 
     // Trims cell storage information to ensure data clarity
     useEffect(() => {
@@ -280,11 +280,11 @@ function GameBoard() {
 
     useEffect(() => {
         leaderBoardSave.current = leaderBoard
-    }, [serverMessageLog, leaderBoard]);
+    }, [leaderBoard]);
 
     useEffect(() => {
         roomNumberSave.current = passwordEntry
-    }, [turnNumber, chat, serverMessageLog, serverMessageLog]);
+    }, [turnNumber, chat]);
 
     useEffect(() => {
         playerNameSave.current = savedName
