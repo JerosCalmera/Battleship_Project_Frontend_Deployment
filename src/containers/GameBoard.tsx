@@ -84,7 +84,7 @@ function GameBoard() {
             });
             client.subscribe("/topic/hidden", (message: any) => {
                 if (passwordEntry == "No Password") {
-                    setPasswordEntry (password);
+                    setPasswordEntry(roomNumberSave.current);
                     console.log("Password updated")
                 }
                 const newMessage: string = message.body.slice(12, -2)
