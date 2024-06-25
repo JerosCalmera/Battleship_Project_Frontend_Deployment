@@ -83,10 +83,11 @@ function GameBoard() {
                 setServerStatus(true)
             });
             client.subscribe("/topic/hidden", (message: any) => {
+                console.log("The Room number is: " + roomNumberSave.current)
                 const newMessage: string = message.body.slice(12, -2)
                 if (newMessage.includes(roomNumberSave.current)) {
                 hiddenParse(message.body.slice(12, -2))
-                console.log("Room number:" + roomNumberSave.current);}
+                console.log("Confirmed room number: " + roomNumberSave.current);}
             });
             client.subscribe("/topic/nameValidated", (message: any) => {
                 nameValidation(message.body.slice(12, -2));
