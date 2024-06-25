@@ -84,13 +84,10 @@ function GameBoard() {
             });
             client.subscribe("/topic/hidden", (message: any) => {
                 if (passwordEntry == "No Password") {
-                    setPasswordEntry(roomNumberSave.current);
-                    console.log("Password updated")
-                }
+                    setPasswordEntry(roomNumberSave.current);}         
                 const newMessage: string = message.body.slice(12, -2)
                 if (newMessage.includes(roomNumberSave.current)) {
-                hiddenParse(message.body.slice(12, -2))
-                console.log("Confirmed room number: " + roomNumberSave.current);}
+                hiddenParse(message.body.slice(12, -2))}
             });
             client.subscribe("/topic/nameValidated", (message: any) => {
                 nameValidation(message.body.slice(12, -2));
@@ -406,7 +403,7 @@ function GameBoard() {
         setChatEntry("")
     }
 
-    // Parses data that is needed but is not intended for display, such game startup info or if a player has used the reset button
+    // Parses data that is needed but is not intended for display, such game startup info or if a player has used the restart button
     const hiddenParse = (message: any) => {
         if (message.includes("Server: Room saved!")) {
             setRoomSaved(true);
@@ -456,9 +453,9 @@ function GameBoard() {
     // Begins the restart process to purge information not needed from the database connected to the backend
     const restart = () => {
         if (playerNameSave.current != "name") {
-        stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));
+        stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));}
         if (player2Name.includes("Computer")) {
-        stompClient.send("/app/restart", {}, JSON.stringify(player2NameSave.current));}}
+        stompClient.send("/app/restart", {}, JSON.stringify(player2NameSave.current));}
         location.reload();
     }
 
@@ -597,7 +594,7 @@ function GameBoard() {
         )
     }
 
-    // Notify the player another player has used the reset button
+    // Notify the player another player has used the restart button
     const playerLeftRender = () => {
         return (
         <div className="bugReportPageFade">
