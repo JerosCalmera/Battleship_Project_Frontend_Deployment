@@ -84,6 +84,7 @@ function GameBoard() {
             });
             client.subscribe("/topic/hidden", (message: any) => {
                 console.log("The Room number is: " + roomNumberSave.current)
+                console.log("The Room number in passwordEntry is: " + passwordEntry)
                 const newMessage: string = message.body.slice(12, -2)
                 if (newMessage.includes(roomNumberSave.current)) {
                 hiddenParse(message.body.slice(12, -2))
@@ -373,8 +374,8 @@ function GameBoard() {
         setPasswordEntry(roomNumber)
         setPassword(roomNumber)
         roomNumberSave.current = passwordEntry
-        stompClient.send("/app/room", {}, JSON.stringify(roomNumber + playerNameSave.current));
         setLoading(true)
+        stompClient.send("/app/room", {}, JSON.stringify(roomNumber + playerNameSave.current));
     }
 
     // Checks a players name is within the character limits and if so sends it to the backend and starts the game creation process
