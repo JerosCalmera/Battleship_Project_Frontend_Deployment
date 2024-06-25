@@ -222,7 +222,7 @@ function GameBoard() {
         if (loading == true) {
             setLoading(false)
         }
-    }, [nameValidated, serverMessageLog])
+    }, [nameValidated, serverMessageLog, roomSaved, roomSynced])
 
     // Logic for checking who a missed shot belongs to for display
     useEffect(() => {
@@ -578,7 +578,7 @@ function GameBoard() {
                     First of all, place your ships by clicking them from the left selection, and then click two spaces on your grid to place them,
                     the ships will then autocomplete in the direction you clicked, alternatively click "Random Placement" to have the computer place your ships for you.
                     Once all your ships are placed, click "Ready", once both players are ready the match will begin! <br />
-                    <br />
+                    <br />press res
                     The first player will be picked randomly, then click on your opponent's board on your turn to shoot at their ships. The first player to destroy all their
                     opponents' ships will be the winner! And you will gain a level that will be shown on the leaderboard if you are in the top ten! <br />
                     <br />
@@ -600,7 +600,7 @@ function GameBoard() {
         <div className="bugReportPageFade">
             <div className="bugReportOuter">
                 <div className="gameFlash">
-                <h3>The other player has left the game, press restart to return to the start screen </h3><br />
+                <h3>The other player has left the game, press the restart button below to return to the start screen </h3><br />
                         <button className="button" onClick={restart}>Restart</button>
                 </div>
             </div>
