@@ -239,7 +239,7 @@ function GameBoard() {
         if (serverMessageLog === "Game server ready...." && leaderBoard.length < 1) {
             stompClient.send("/app/leaderBoard", {}, JSON.stringify("Game start"));
         }
-    }, []);
+    }, [serverMessageLog]);
 
     // Trims cell storage information to ensure data clarity
     useEffect(() => {
