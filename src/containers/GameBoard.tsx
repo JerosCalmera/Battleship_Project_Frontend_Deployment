@@ -459,9 +459,9 @@ function GameBoard() {
         stompClient.send("/app/restart", {}, JSON.stringify(player2NameSave.current));}
     }
 
-    const reload = () => {
-        location.reload();
-    }
+    // const reload = () => {
+    //     location.reload();
+    // }
 
     // Trigger for conditional styling of the server status
     const serverStatusStyle = () => {
