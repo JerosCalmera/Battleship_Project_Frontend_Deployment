@@ -411,6 +411,7 @@ function GameBoard() {
             setRoomSynced(true);}
         if (message.includes("Player left") && !player2NameSave.current.includes("Computer") && !message.includes(playerNameSave.current)) {
             if (winner === "unknown"){
+                console.log(winner);
             setPlayerLeft(0)}}
     }
 
