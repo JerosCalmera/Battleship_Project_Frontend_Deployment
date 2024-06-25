@@ -411,7 +411,7 @@ function GameBoard() {
         if (message.includes("Server: Room synced")) {
             setRoomSynced(true);
             console.log("Room synced on this client!")}
-        if (message.includes("Player left") && (!player2NameSave.current.includes("Computer")) && !message.includes(playerNameSave.current)) {
+        if (message.includes("Player left") && !player2NameSave.current.includes("Computer") && !message.includes(playerNameSave.current)) {
             setPlayerLeft(0)}
     }
 
