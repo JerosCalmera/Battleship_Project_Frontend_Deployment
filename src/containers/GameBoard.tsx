@@ -83,8 +83,10 @@ function GameBoard() {
                 setServerStatus(true)
             });
             client.subscribe("/topic/hidden", (message: any) => {
-                console.log("The Room number is: " + roomNumberSave.current)
-                console.log("The Room number in passwordEntry is: " + passwordEntry)
+                if (passwordEntry == "No Password") {
+                    setPasswordEntry (password);
+                    console.log("Password updated")
+                }
                 const newMessage: string = message.body.slice(12, -2)
                 if (newMessage.includes(roomNumberSave.current)) {
                 hiddenParse(message.body.slice(12, -2))
