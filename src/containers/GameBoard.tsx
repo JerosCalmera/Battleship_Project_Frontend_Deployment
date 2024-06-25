@@ -456,6 +456,10 @@ function GameBoard() {
         stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));}
         if (player2Name.includes("Computer")) {
         stompClient.send("/app/restart", {}, JSON.stringify(player2NameSave.current));}
+        reload();
+    }
+
+    const reload = () => {
         location.reload();
     }
 
