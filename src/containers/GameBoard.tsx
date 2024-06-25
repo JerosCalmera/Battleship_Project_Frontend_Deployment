@@ -66,6 +66,7 @@ function GameBoard() {
     const [chatStorage, setChatStorage] = useState<string>("empty")
 
     const [loading, setLoading] = useState<boolean>(false)
+    const [restarting, setRestarting] = useState<boolean>(false)
 
     // WebSocket connection with error handling
     useEffect(() => {
@@ -411,7 +412,7 @@ function GameBoard() {
         if (message.includes("Server: Room synced")) {
             setRoomSynced(true);
             console.log("Room synced on this client!")}
-        if (message.includes("Player left") && (!player2Name.includes("Computer"))) {
+        if (message.includes("Player left") && (restarting == true)) {
             setPlayerLeft(0)}
     }
 
@@ -452,6 +453,7 @@ function GameBoard() {
 
     // Begins the restart process to purge information not needed from the database connected to the backend
     const restart = () => {
+        setRestarting(true);
         if (playerNameSave.current != "name") {
         stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));}
         if (player2Name.includes("Computer")) {
