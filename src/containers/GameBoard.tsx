@@ -406,11 +406,9 @@ function GameBoard() {
     // Parses data that is needed but is not intended for display, such game startup info or if a player has used the restart button
     const hiddenParse = (message: any) => {
         if (message.includes("Server: Room saved!")) {
-            setRoomSaved(true);
-        console.log("Room saved on this client")}
+            setRoomSaved(true);}
         if (message.includes("Server: Room synced")) {
-            setRoomSynced(true);
-            console.log("Room synced on this client!")}
+            setRoomSynced(true);}
         if (message.includes("Player left") && !player2NameSave.current.includes("Computer") && !message.includes(playerNameSave.current) && winner == "unknown") {
             setPlayerLeft(0)}
     }
