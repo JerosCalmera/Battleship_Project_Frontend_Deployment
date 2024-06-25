@@ -409,8 +409,9 @@ function GameBoard() {
             setRoomSaved(true);}
         if (message.includes("Server: Room synced")) {
             setRoomSynced(true);}
-        if (message.includes("Player left") && !player2NameSave.current.includes("Computer") && !message.includes(playerNameSave.current) && winner === "unknown") {
-            setPlayerLeft(0)}
+        if (message.includes("Player left") && !player2NameSave.current.includes("Computer") && !message.includes(playerNameSave.current)) {
+            if (winner === "unknown"){
+            setPlayerLeft(0)}}
     }
 
     // Parses chat data to ensure it is unique (random chat tokens are generated from the backend) and uses ship destroyed messages to check how many ships your opponent has lost
