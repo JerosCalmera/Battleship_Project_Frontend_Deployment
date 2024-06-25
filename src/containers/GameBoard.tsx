@@ -452,7 +452,7 @@ function GameBoard() {
 
     // Begins the restart process to purge information not needed from the database connected to the backend
     const restart = () => {
-        if (playerNameSave.current != "name") {
+        if (player1Data != "Player 1" || playerNameSave.current != "name") {
         stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));}
         if (player2Name.includes("Computer")) {
         stompClient.send("/app/restart", {}, JSON.stringify(player2NameSave.current));}
