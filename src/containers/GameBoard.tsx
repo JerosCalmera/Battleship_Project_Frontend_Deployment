@@ -409,7 +409,7 @@ function GameBoard() {
             setRoomSaved(true);}
         if (message.includes("Server: Room synced")) {
             setRoomSynced(true);}
-        if (message.includes("Player left") && !player2NameSave.current.includes("Computer") && !message.includes(playerNameSave.current) && winner == "unknown") {
+        if (message.includes("Player left") && !player2NameSave.current.includes("Computer") && !message.includes(playerNameSave.current) && winner === "unknown") {
             setPlayerLeft(0)}
     }
 
