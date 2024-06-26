@@ -639,7 +639,7 @@ function GameBoard() {
 
     // Displays help splashes
     const help = () => {
-        if (roomSynced == false|| roomSaved == true) {
+        if (roomSynced == false) {
             startUpFlashScreen()
         }
         else {
