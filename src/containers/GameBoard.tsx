@@ -341,6 +341,9 @@ function GameBoard() {
     const nameValidation = (message: any) => {
         if (message.includes(playerNameSave.current)) { 
             setNameValidated(true);}
+        else {
+            setLoading(false);
+        }
     }
     
     // Checks a room number is long enough and if so sends it to the backend
