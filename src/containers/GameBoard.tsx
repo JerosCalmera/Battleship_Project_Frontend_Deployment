@@ -433,13 +433,15 @@ function GameBoard() {
         if (newMessage.includes(roomNumberSave.current) && roomNumberSave.current.length > 0) {
             if (newMessage.includes("SUNKSHIPX") && !newMessage.includes(playerNameSave.current))
                 {setEnemyShipsRemaining(enemyShipsRemainingSave.current -1)
+                    newMessage = message.body.slice(20, -2);
                     newMessage = newMessage.replace(/SUNKSHIPX/g, "");
-                    newMessage = `<span style = "color: red">` + message.body.slice(20, -2);
+                    newMessage = `<span style = "color: red">` + newMessage + `</span>`;
                 }
             else if (newMessage.includes("SUNKSHIPX") && newMessage.includes(playerNameSave.current))
                 {
+                    newMessage = message.body.slice(20, -2);
                     newMessage = newMessage.replace(/SUNKSHIPX/g, "");
-                    newMessage = `<span style = "color: red">` + message.body.slice(20, -2);
+                    newMessage = `<span style = "color: red">` + newMessage + `</span>`;
                 }
             else {
             newMessage = message.body.slice(20, -2);}
