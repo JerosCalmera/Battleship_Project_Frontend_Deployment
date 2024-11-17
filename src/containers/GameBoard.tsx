@@ -431,9 +431,18 @@ function GameBoard() {
         }
         let newMessage: string = message.body.slice(16, -2);
         if (newMessage.includes(roomNumberSave.current) && roomNumberSave.current.length > 0) {
-            if (newMessage.includes(": You destroyed my") && !newMessage.includes(playerNameSave.current))
-                {setEnemyShipsRemaining(enemyShipsRemainingSave.current -1)}
-            newMessage = message.body.slice(20, -2);
+            if (newMessage.includes("SUNKSHIPX") && !newMessage.includes(playerNameSave.current))
+                {setEnemyShipsRemaining(enemyShipsRemainingSave.current -1)
+                    newMessage = newMessage.replace(/SUNKSHIP/g, "");
+                    newMessage = `<style = "color: red">` + message.body.slice(20, -2);
+                }
+            else if (newMessage.includes("SUNKSHIPX") && newMessage.includes(playerNameSave.current))
+                {
+                    newMessage = newMessage.replace(/SUNKSHIP/g, "");
+                    newMessage = `<style = "color: red">` + message.body.slice(20, -2);
+                }
+            else {
+            newMessage = message.body.slice(20, -2);}
             setChat((prevChat) => {
             const updatedChat = [...prevChat, newMessage];
             return updatedChat.slice(-10);
@@ -591,7 +600,7 @@ function GameBoard() {
                     First of all, place your ships by clicking them from the left selection, and then click two spaces on your grid to place them,
                     the ships will then autocomplete in the direction you clicked, alternatively click "Random Placement" to have the computer place your ships for you.
                     Once all your ships are placed, click "Ready", once both players are ready the match will begin! <br />
-                    <br />press res
+                    <br />
                     The first player will be picked randomly, then click on your opponent's board on your turn to shoot at their ships. The first player to destroy all their
                     opponents' ships will be the winner! And you will gain a level that will be shown on the leaderboard if you are in the top ten! <br />
                     <br />
