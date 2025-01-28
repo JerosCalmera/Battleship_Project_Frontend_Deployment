@@ -1,13 +1,17 @@
 body {
-    background-color: black;
-    color: rgb(96, 193, 193);
-    background-image: url(assets/backround.jpg);
-    background-size: 100vw 100vh;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-  }
+  background-color: rgba(0, 0, 0, 0.404);
+  color: rgb(96, 193, 193);
+  background-size: 100vw 100vh;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+html {
+  background-image: url(assets/backround.jpg);
+  z-index: 10;
+}
 
 .gridTitle {
   padding-left: 16.5%;
@@ -150,12 +154,12 @@ body {
   height: 60px;
   width: 350px;
   padding-left: 40px;
-  background-color: rgba(0, 0, 0, 0.888); 
+  background-color: rgba(0, 0, 0, 0.888);
   border-radius: 20px;
 }
 
 .bugReport {
-  background-color: rgba(0, 0, 0, 0.888); 
+  background-color: rgba(0, 0, 0, 0.888);
   border-radius: 20px;
   padding: 40px;
   padding-bottom: 60px;
@@ -166,7 +170,7 @@ body {
 .gameFlash {
   height: auto;
   width: auto;
-  background-color: rgba(0, 0, 0, 0.888); 
+  background-color: rgba(0, 0, 0, 0.888);
   border-radius: 20px;
   padding-bottom: 30px;
   padding-top: 15px;
@@ -180,7 +184,7 @@ body {
   text-align: left;
 }
 
-.bugReportInputBox{
+.bugReportInputBox {
   width: 800px;
   background-color: rgba(116, 196, 194, 0.575);
 }
