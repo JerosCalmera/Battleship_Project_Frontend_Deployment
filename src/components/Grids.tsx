@@ -23,9 +23,10 @@ interface Props {
     turnNumber: number;
     setPlacedShip: React.Dispatch<React.SetStateAction<string>>;
     enemyShipsRemaining: number;
+    friendlyShipsRemaining: number;
 }
 
-const Grids: React.FC<Props> = ({ enemyShipsRemaining, gameInfo, turnNumber, playerName, turn, miss, enemyMiss, player2Name, placedShip, setPlacedShip, player1Data, player2Data, savedName, shipInfo, shipDamage, enemyShipDamage, stompClient }) => {
+const Grids: React.FC<Props> = ({ friendlyShipsRemaining, enemyShipsRemaining, gameInfo, turnNumber, playerName, turn, miss, enemyMiss, player2Name, placedShip, setPlacedShip, player1Data, player2Data, savedName, shipInfo, shipDamage, enemyShipDamage, stompClient }) => {
 
     const [shipPlacement, setShipPlacement] = useState<boolean>(false)
     const [placedReadyShip, setPlacedReadyShip] = useState<string>("")
@@ -100,7 +101,7 @@ const Grids: React.FC<Props> = ({ enemyShipsRemaining, gameInfo, turnNumber, pla
                 buttons.push(
                     <button key={cellValue}
                         onClick={() => clickedEnemyCell(cellValue)}
-                        className={stylingEnemyCell(cellValue)}>{shipType}</button>);
+                        className={stylingEnemyCell(cellValue)}>X</button>);
             }
             end.push(
                 <div>
@@ -219,7 +220,7 @@ const Grids: React.FC<Props> = ({ enemyShipsRemaining, gameInfo, turnNumber, pla
 
     return (
         <>
-            <GameInfoBox enemyShipsRemaining={enemyShipsRemaining} player1Data={player1Data} shipInfo={shipInfo} shipDamage={shipDamage} turn={turn} gameInfo={gameInfo} turnNumber={turnNumber}
+            <GameInfoBox friendlyShipsRemaining={friendlyShipsRemaining} enemyShipsRemaining={enemyShipsRemaining} player1Data={player1Data} shipInfo={shipInfo} shipDamage={shipDamage} turn={turn} gameInfo={gameInfo} turnNumber={turnNumber}
                 matchBegin={matchBegin} randomPlacement={randomPlacement} />
             <div className="gameBoardOuterGreater">
                 <div className="gameBoardOuter">

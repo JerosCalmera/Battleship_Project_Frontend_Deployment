@@ -468,7 +468,7 @@ function GameBoard() {
                 newMessage = newMessage.replace(/SUNKSHIPX/g, "");
             }
             else if (newMessage.includes("SUNKSHIPX") && newMessage.includes(playerNameSave.current)) {
-                setFriendlyShipsRemaining(enemyFriendlyRemainingSave.current - 1)
+                setFriendlyShipsRemaining(friendlyShipsRemainingSave.current - 1)
                 newMessage = message.body.slice(20, -2);
                 newMessage = newMessage.replace(/SUNKSHIPX/g, "");
             }
