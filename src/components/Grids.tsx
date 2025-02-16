@@ -40,17 +40,15 @@ const Grids: React.FC<Props> = ({ friendlyShipsRemaining, enemyShipsRemaining, g
 
     const [random, setRandom] = useState<number>(0)
 
-    let shipTypeLetter = "X"
-
     // When a ship is placed, removes that ship from the total unplaced ships
     useEffect(() => {
         const shipType = "CarrierBattleshipCruiserDestroyer";
         const ship = placedShip;
         if (ship.includes(shipType && savedName)) {
-            if (ship.includes("Carrier")) { setCarrier(carrier - 1); shipTypeLetter = "CA" }
-            else if (ship.includes("Battleship")) { setBattleship(battleship - 1); shipTypeLetter = "B" }
-            else if (ship.includes("Cruiser")) { setCruiser(cruiser - 1); shipTypeLetter = "C" }
-            else if (ship.includes("Destroyer")) { setDestroyer(destroyer - 1); shipTypeLetter = "D" }
+            if (ship.includes("Carrier")) { setCarrier(carrier - 1) }
+            else if (ship.includes("Battleship")) { setBattleship(battleship - 1) }
+            else if (ship.includes("Cruiser")) { setCruiser(cruiser - 1) }
+            else if (ship.includes("Destroyer")) { setDestroyer(destroyer - 1) }
             setPlacedShip("");
             setShipToPlace("");
             stompClient.send("/app/startup", {}, JSON.stringify(playerName));
@@ -76,7 +74,7 @@ const Grids: React.FC<Props> = ({ friendlyShipsRemaining, enemyShipsRemaining, g
                 buttons.push(
                     <button key={cellValue}
                         onClick={() => clickedCell(cellValue)}
-                        className={stylingCell(cellValue)}>{shipTypeLetter}</button>);
+                        className={stylingCell(cellValue)}>X</button>);
             }
             end.push(
                 <div>
