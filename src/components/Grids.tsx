@@ -25,7 +25,7 @@ interface Props {
     enemyShipsRemaining: number;
 }
 
-const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, playerName, turn, miss, enemyMiss, player2Name, placedShip, setPlacedShip, player1Data, player2Data, savedName, shipInfo, shipDamage, enemyShipDamage, stompClient }) => {
+const Grids: React.FC<Props> = ({ enemyShipsRemaining, gameInfo, turnNumber, playerName, turn, miss, enemyMiss, player2Name, placedShip, setPlacedShip, player1Data, player2Data, savedName, shipInfo, shipDamage, enemyShipDamage, stompClient }) => {
 
     const [shipPlacement, setShipPlacement] = useState<boolean>(false)
     const [placedReadyShip, setPlacedReadyShip] = useState<string>("")
@@ -39,15 +39,17 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
 
     const [random, setRandom] = useState<number>(0)
 
+    let shipTypeLetter = "X"
+
     // When a ship is placed, removes that ship from the total unplaced ships
     useEffect(() => {
         const shipType = "CarrierBattleshipCruiserDestroyer";
         const ship = placedShip;
         if (ship.includes(shipType && savedName)) {
-            if (ship.includes("Carrier")) { setCarrier(carrier - 1) }
-            else if (ship.includes("Battleship")) { setBattleship(battleship - 1) }
-            else if (ship.includes("Cruiser")) { setCruiser(cruiser - 1) }
-            else if (ship.includes("Destroyer")) { setDestroyer(destroyer - 1) }
+            if (ship.includes("Carrier")) { setCarrier(carrier - 1); shipTypeLetter = "CA" }
+            else if (ship.includes("Battleship")) { setBattleship(battleship - 1); shipTypeLetter = "B" }
+            else if (ship.includes("Cruiser")) { setCruiser(cruiser - 1); shipTypeLetter = "C" }
+            else if (ship.includes("Destroyer")) { setDestroyer(destroyer - 1); shipTypeLetter = "D" }
             setPlacedShip("");
             setShipToPlace("");
             stompClient.send("/app/startup", {}, JSON.stringify(playerName));
@@ -58,7 +60,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
     useEffect(() => {
         if (placedShip.includes("Invalid"))
             setPlacedReadyShip("")
-            setShipToPlace("")
+        setShipToPlace("")
     }, [placedShip])
 
     // Creates the players grid
@@ -73,7 +75,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
                 buttons.push(
                     <button key={cellValue}
                         onClick={() => clickedCell(cellValue)}
-                        className={stylingCell(cellValue)}>X</button>);
+                        className={stylingCell(cellValue)}>{shipTypeLetter}</button>);
             }
             end.push(
                 <div>
@@ -98,7 +100,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
                 buttons.push(
                     <button key={cellValue}
                         onClick={() => clickedEnemyCell(cellValue)}
-                        className={stylingEnemyCell(cellValue)}>X</button>);
+                        className={stylingEnemyCell(cellValue)}>{shipType}</button>);
             }
             end.push(
                 <div>
@@ -150,9 +152,10 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
     // Sends to the backend that a player wishes to let the computer place their ships, avoids repeat requests
     const randomPlacement = () => {
         if (random === 0) {
-        stompClient.send("/app/randomPlacement", {}, JSON.stringify(savedName));
-        setRandom(1)}
-        else {return}
+            stompClient.send("/app/randomPlacement", {}, JSON.stringify(savedName));
+            setRandom(1)
+        }
+        else { return }
     }
 
     // Logic for placing of ships, checks what ship is selected and that two cells have been clicked to send to the backend for auto completion for the rest of the ship if needed
@@ -186,7 +189,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
             }
         }
     }
-    
+
     // Checks for what ships has been selected for placement
     const placeCarrier = () => {
         setShipSize(5);
@@ -216,8 +219,8 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
 
     return (
         <>
-            <GameInfoBox enemyShipsRemaining={enemyShipsRemaining}player1Data={player1Data} shipInfo={shipInfo} shipDamage={shipDamage} turn={turn} gameInfo={gameInfo} turnNumber={turnNumber}
-            matchBegin={matchBegin} randomPlacement={randomPlacement}/>
+            <GameInfoBox enemyShipsRemaining={enemyShipsRemaining} player1Data={player1Data} shipInfo={shipInfo} shipDamage={shipDamage} turn={turn} gameInfo={gameInfo} turnNumber={turnNumber}
+                matchBegin={matchBegin} randomPlacement={randomPlacement} />
             <div className="gameBoardOuterGreater">
                 <div className="gameBoardOuter">
                     <div className="shipPlacementOuter">
@@ -260,7 +263,7 @@ const Grids: React.FC<Props> = ({enemyShipsRemaining, gameInfo, turnNumber, play
                     </div>
                     <div className="gameBoardRender">
                         <div className="gridTitle">
-                            <h3>{player1Data.includes("Computer") ? player1Data.includes(savedName) ? "Error": "Setting up...." : player1Data }</h3>
+                            <h3>{player1Data.includes("Computer") ? player1Data.includes(savedName) ? "Error" : "Setting up...." : player1Data}</h3>
                         </div>
                         <ul>
                             {populateGrid()}

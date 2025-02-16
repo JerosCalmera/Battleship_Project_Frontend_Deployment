@@ -1,4 +1,4 @@
-import Stomp, {} from "stompjs";
+import Stomp, { } from "stompjs";
 import SockJS from "sockjs-client";
 import { useEffect, useRef, useState } from "react";
 import Grids from "../components/Grids";
@@ -20,6 +20,7 @@ function GameBoard() {
     const [shipInfo, setShipInfo] = useState<string>("")
     const [shipDamage, setShipDamage] = useState<string>("")
     const [enemyShipsRemaining, setEnemyShipsRemaining] = useState<number>(10)
+    const [friendlyShipsRemaining, setFriendlyShipsRemaining] = useState<number>(10)
 
     const [enemyShipDamage, setEnemyShipDamage] = useState<string>("")
 
@@ -70,147 +71,163 @@ function GameBoard() {
     // WebSocket connection with error handling
     useEffect(() => {
         const connectToWebSocket = () => {
-        const socket = new SockJS(`${BASE_URL}/game`);
-        const client = Stomp.over(socket);
+            const socket = new SockJS(`${BASE_URL}/game`);
+            const client = Stomp.over(socket);
 
-        if (serverStatus != true) {
-        client.connect({}, () => {
-            setServerStatus(true)
-            setStompClient(client);
+            if (serverStatus != true) {
+                client.connect({}, () => {
+                    setServerStatus(true)
+                    setStompClient(client);
 
-            client.subscribe("/topic/connect", (message: any) => {
-                serverSetMessageLog(message.body.slice(12, -2));
-                setServerStatus(true)
-            });
-            client.subscribe("/topic/hidden", (message: any) => {
-                if (passwordEntry == "No Password") {
-                    setPasswordEntry(roomNumberSave.current);}         
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                hiddenParse(message.body.slice(12, -2))}
-            });
-            client.subscribe("/topic/nameValidated", (message: any) => {
-                nameValidation(message.body.slice(12, -2));
-            });
-            client.subscribe("/topic/gameInfo", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setGameInfo(message.body.slice(16, -2))}
-            });
-            client.subscribe("/topic/gameData", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setCellStorage(message.body.slice(16, -2))}
-            });
+                    client.subscribe("/topic/connect", (message: any) => {
+                        serverSetMessageLog(message.body.slice(12, -2));
+                        setServerStatus(true)
+                    });
+                    client.subscribe("/topic/hidden", (message: any) => {
+                        if (passwordEntry == "No Password") {
+                            setPasswordEntry(roomNumberSave.current);
+                        }
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            hiddenParse(message.body.slice(12, -2))
+                        }
+                    });
+                    client.subscribe("/topic/nameValidated", (message: any) => {
+                        nameValidation(message.body.slice(12, -2));
+                    });
+                    client.subscribe("/topic/gameInfo", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setGameInfo(message.body.slice(16, -2))
+                        }
+                    });
+                    client.subscribe("/topic/gameData", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setCellStorage(message.body.slice(16, -2))
+                        }
+                    });
 
-            client.subscribe("/topic/turn", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setTurn(message.body.slice(16, -2))}
-            });
-            client.subscribe("/topic/gameData2", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setShipDamage(message.body.slice(16, -2))}
-            });
-            client.subscribe("/topic/placement", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setShipDamage(message.body.slice(16, -2))}
-            });
-            client.subscribe("/topic/miss", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setMissCheck(message.body.slice(16, -2))}
-            });
+                    client.subscribe("/topic/turn", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setTurn(message.body.slice(16, -2))
+                        }
+                    });
+                    client.subscribe("/topic/gameData2", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setShipDamage(message.body.slice(16, -2))
+                        }
+                    });
+                    client.subscribe("/topic/placement", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setShipDamage(message.body.slice(16, -2))
+                        }
+                    });
+                    client.subscribe("/topic/miss", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setMissCheck(message.body.slice(16, -2))
+                        }
+                    });
 
-            client.subscribe("/topic/chat", (message: any) => {
-                chatParse(message)
+                    client.subscribe("/topic/chat", (message: any) => {
+                        chatParse(message)
+                    });
+
+                    client.subscribe("/topic/globalChat", (message: any) => {
+                        globalChatParse(message)
+                    });
+
+                    client.subscribe("/topic/playerData1", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setPlayer1Data(message.body.slice(16, -2))
+                        }
+                    })
+                    client.subscribe("/topic/playerData2", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setPlayer2Data(message.body.slice(16, -2))
+                        }
+                    });
+
+                    client.subscribe("/topic/computer", () => {
+                    });
+
+                    client.subscribe("/topic/randomPlacement", () => {
+                    });
+
+                    client.subscribe("/topic/leaderBoard", (message: any) => {
+                        const leaderBoardEntry: string = message.body.slice(12, -2)
+                        if (!leaderBoardSave.current.includes(leaderBoardEntry)) {
+                            setLeaderBoard((prevLeader) => {
+                                const updatedLeader = [...prevLeader, leaderBoardEntry];
+                                return updatedLeader.slice(-10)
+                            })
+                        }
+                    }
+                    );
+
+                    client.subscribe("/topic/gameUpdate", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setPlayer1Data(message.body.slice(16, -2))
+                        }
+                    });
+
+                    client.subscribe("/topic/enemyDamage", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setDamageCheck(message.body.slice(16, -2))
+                        }
+                    });
+
+                    client.subscribe("/topic/startup", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setPlayer1Data(message.body.slice(16, -2))
+                        }
+                    });
+
+                    client.subscribe("/topic/placement2", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setPlacedShip(message.body.slice(16, -2))
+                        }
+                    });
+
+                    client.subscribe("/topic/winner", (message: any) => {
+                        const newMessage: string = message.body.slice(12, -2)
+                        if (newMessage.includes(roomNumberSave.current)) {
+                            setWinner(message.body.slice(16, -2))
+                        }
+                    });
+
+                    client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${BASE_URL}`));
+
+                }, (error) => {
+                    console.error("Connection failed, reconnecting....", error)
+                    setServerStatus(false);
+                    setTimeout(connectToWebSocket, 1000);
                 });
 
-            client.subscribe("/topic/globalChat", (message: any) => {
-                globalChatParse(message)
-                });
-
-            client.subscribe("/topic/playerData1", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setPlayer1Data(message.body.slice(16, -2))}
-            })
-            client.subscribe("/topic/playerData2", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setPlayer2Data(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/computer", () => {
-            });
-
-            client.subscribe("/topic/randomPlacement", () => {
-            });
-
-            client.subscribe("/topic/leaderBoard", (message: any) => {
-                const leaderBoardEntry: string = message.body.slice(12, -2)
-                if (!leaderBoardSave.current.includes(leaderBoardEntry)) {
-                setLeaderBoard((prevLeader) => {
-                    const updatedLeader = [...prevLeader, leaderBoardEntry];
-                    return updatedLeader.slice(-10)
-                })
-            }}
-            );
-
-            client.subscribe("/topic/gameUpdate", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setPlayer1Data(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/enemyDamage", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setDamageCheck(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/startup", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setPlayer1Data(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/placement2", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setPlacedShip(message.body.slice(16, -2))}
-            });
-
-            client.subscribe("/topic/winner", (message: any) => {
-                const newMessage: string = message.body.slice(12, -2)
-                if (newMessage.includes(roomNumberSave.current)) {
-                setWinner(message.body.slice(16, -2))}
-            });
-
-            client.send("/app/hello", {}, JSON.stringify(`Client Connected on ${BASE_URL}`));
-
-        }, (error) => {
-                console.error("Connection failed, reconnecting....", error)
-                setServerStatus(false);
-                setTimeout(connectToWebSocket, 1000);
-        });
-
-            socket.onclose = () => {
-                (console.log("Connection closed"))
-                setServerStatus(false);
-                setTimeout(connectToWebSocket, 1000);
+                socket.onclose = () => {
+                    (console.log("Connection closed"))
+                    setServerStatus(false);
+                    setTimeout(connectToWebSocket, 1000);
+                };
+                setStompClient(client)
             };
-            setStompClient(client)
-        };
         }
         connectToWebSocket();
 
         return () => {
             if (stompClient) {
                 stompClient.disconnect(() => {
-                console.log("Connection disconnected");
+                    console.log("Connection disconnected");
                 });
                 setServerStatus(false)
             }
@@ -268,6 +285,8 @@ function GameBoard() {
 
     const enemyShipsRemainingSave = useRef(enemyShipsRemaining);
 
+    const friendlyShipsRemainingSave = useRef(friendlyShipsRemaining);
+
     const leaderBoardSave = useRef(leaderBoard);
 
     const playerNameSave = useRef(savedName);
@@ -275,7 +294,7 @@ function GameBoard() {
     const player2NameSave = useRef(player2Name);
 
     const chatStorageSave = useRef(chatStorage);
-    
+
     const winnerSave = useRef(winner);
 
 
@@ -304,6 +323,11 @@ function GameBoard() {
     }, [chat]);
 
     useEffect(() => {
+        friendlyShipsRemainingSave.current = friendlyShipsRemaining
+    }, [chat]);
+
+
+    useEffect(() => {
         player2NameSave.current = player2Name
     }, [player2Name]);
 
@@ -313,25 +337,25 @@ function GameBoard() {
 
 
     // Allows for text to be sent to an input using the enter key
-    const handleChatEnterPress = (e:any) => {
+    const handleChatEnterPress = (e: any) => {
         if (e.key === 'Enter') {
             chatSend()
         }
     }
 
-    const handleAuthEnterPress = (e:any) => {
+    const handleAuthEnterPress = (e: any) => {
         if (e.key === 'Enter') {
             auth()
         }
     }
 
-    const handleSaveNameEnterPress = (e:any) => {
+    const handleSaveNameEnterPress = (e: any) => {
         if (e.key === 'Enter') {
             saveName()
         }
     }
 
-    const handleBugReportEnterPress = (e:any) => {
+    const handleBugReportEnterPress = (e: any) => {
         if (e.key === 'Enter') {
             sendBugReport()
         }
@@ -339,13 +363,14 @@ function GameBoard() {
 
     // Checks a players name has been validated as correct
     const nameValidation = (message: any) => {
-        if (message.includes(playerNameSave.current)) { 
-            setNameValidated(true);}
+        if (message.includes(playerNameSave.current)) {
+            setNameValidated(true);
+        }
         else {
             setLoading(false);
         }
     }
-    
+
     // Checks a room number is long enough and if so sends it to the backend
     const auth = () => {
         if (password.length < 4) {
@@ -406,74 +431,85 @@ function GameBoard() {
             return;
         }
         if (gameFlashSave.current === 1 && nameValidated == true) {
-            stompClient.send("/app/globalChat", {}, JSON.stringify("[LOBBY] " + playerNameSave.current + ": " + chatEntry));}
+            stompClient.send("/app/globalChat", {}, JSON.stringify("[LOBBY] " + playerNameSave.current + ": " + chatEntry));
+        }
         else if (gameFlashSave.current === 1 && nameValidated == false) {
-            stompClient.send("/app/globalChat", {}, JSON.stringify("[LOBBY] Guest: " + chatEntry));}
+            stompClient.send("/app/globalChat", {}, JSON.stringify("[LOBBY] Guest: " + chatEntry));
+        }
         else {
-            stompClient.send("/app/chat", {}, JSON.stringify(passwordEntry + playerNameSave.current + ": " + chatEntry));}
+            stompClient.send("/app/chat", {}, JSON.stringify(passwordEntry + playerNameSave.current + ": " + chatEntry));
+        }
         setChatEntry("")
     }
 
     // Parses data that is needed but is not intended for display, such game startup info or if a player has used the restart button
     const hiddenParse = (message: any) => {
         if (message.includes("Server: Room saved!")) {
-            setRoomSaved(true);}
+            setRoomSaved(true);
+        }
         if (message.includes("Server: Room synced")) {
-            setRoomSynced(true);}
+            setRoomSynced(true);
+        }
         if (message.includes("Player left") && !player2NameSave.current.includes("Computer") && !message.includes(playerNameSave.current) && winnerSave.current === "unknown") {
-            setPlayerLeft(0)}
+            setPlayerLeft(0)
+        }
     }
 
     // Parses chat data to ensure it is unique (random chat tokens are generated from the backend) and uses ship destroyed messages to check how many ships your opponent has lost
     const chatParse = (message: any) => {
-        if (message === (chatStorageSave)){
+        if (message === (chatStorageSave)) {
             return;
         }
         let newMessage: string = message.body.slice(16, -2);
         if (newMessage.includes(roomNumberSave.current) && roomNumberSave.current.length > 0) {
-            if (newMessage.includes("SUNKSHIPX") && !newMessage.includes(playerNameSave.current))
-                {setEnemyShipsRemaining(enemyShipsRemainingSave.current -1)
-                    newMessage = message.body.slice(20, -2);
-                    newMessage = newMessage.replace(/SUNKSHIPX/g, "");
-                }
-            else if (newMessage.includes("SUNKSHIPX") && newMessage.includes(playerNameSave.current))
-                {
-                    newMessage = message.body.slice(20, -2);
-                    newMessage = newMessage.replace(/SUNKSHIPX/g, "");
-                }
+            if (newMessage.includes("SUNKSHIPX") && !newMessage.includes(playerNameSave.current)) {
+                setEnemyShipsRemaining(enemyShipsRemainingSave.current - 1)
+                newMessage = message.body.slice(20, -2);
+                newMessage = newMessage.replace(/SUNKSHIPX/g, "");
+            }
+            else if (newMessage.includes("SUNKSHIPX") && newMessage.includes(playerNameSave.current)) {
+                setFriendlyShipsRemaining(enemyFriendlyRemainingSave.current - 1)
+                newMessage = message.body.slice(20, -2);
+                newMessage = newMessage.replace(/SUNKSHIPX/g, "");
+            }
             else {
-            newMessage = message.body.slice(20, -2);}
+                newMessage = message.body.slice(20, -2);
+            }
             setChat((prevChat) => {
-            const updatedChat = [...prevChat, newMessage];
-            return updatedChat.slice(-10);
+                const updatedChat = [...prevChat, newMessage];
+                return updatedChat.slice(-10);
             });
         };
-        setTimeout(() => {setChatStorage(message);
+        setTimeout(() => {
+            setChatStorage(message);
         }, 50);
     }
-    
+
     // Parses global chat data to ensure it is unique (random chat tokens are generated from the backend)
     const globalChatParse = (message: any) => {
-        if (message === (chatStorageSave)){
+        if (message === (chatStorageSave)) {
             return;
         }
         let newMessage: string = message.body.slice(16, -2);
         if (gameFlashSave.current === 1) {
             setChat((prevChat) => {
-            const updatedChat = [...prevChat, newMessage];
-            return updatedChat.slice(-10);
-        });
+                const updatedChat = [...prevChat, newMessage];
+                return updatedChat.slice(-10);
+            });
         };
-        setTimeout(() => {setChatStorage(message);
+        setTimeout(() => {
+            setChatStorage(message);
         }, 50);
     }
 
     // Begins the restart process to purge information not needed from the database connected to the backend
     const restart = () => {
         if (playerNameSave.current != "name") {
-        stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));}
+            stompClient.send("/app/restart", {}, JSON.stringify(playerNameSave.current));
+        }
         if (player2Name.includes("Computer")) {
-        stompClient.send("/app/restart", {}, JSON.stringify(player2NameSave.current));}
+            stompClient.send("/app/restart", {}, JSON.stringify(player2NameSave.current));
+        }
         reload();
     }
 
@@ -499,37 +535,42 @@ function GameBoard() {
         stompClient.send("/app/computer", {}, JSON.stringify(roomNumber + playerNameSave.current));
         setLoading(true)
     }
-    
+
     // Trigger for displaying the bug report entry
     const bugReporting = () => {
-        if (bugReport === 0){
-        setBugReport(1)}
+        if (bugReport === 0) {
+            setBugReport(1)
+        }
         else
-        setBugReport(0)
+            setBugReport(0)
     }
 
     // Trigger for displaying the pre-game startup information
     const startUpFlashScreen = () => {
-        if (startUpFlash === 0){
-        setStartUpFlash(1)}
+        if (startUpFlash === 0) {
+            setStartUpFlash(1)
+        }
         else
-        setStartUpFlash(0);
+            setStartUpFlash(0);
     }
 
     // Trigger for displaying the game start information
     const gameFlashScreen = () => {
-        if (gameFlash === 1){
-        setGameFlash(0);
-        sortPlayers()}
+        if (gameFlash === 1) {
+            setGameFlash(0);
+            sortPlayers()
+        }
     }
 
     // Formats bug report information for sending tp the database connected to the backend and sends a message to confirm it has been sent
     const sendBugReport = () => {
-        stompClient.send("/app/bugReport", {}, JSON.stringify("DATE: " + Date() + ", USER: " + savedName + ", REPORT: "  + bugReportInput));
+        stompClient.send("/app/bugReport", {}, JSON.stringify("DATE: " + Date() + ", USER: " + savedName + ", REPORT: " + bugReportInput));
         if (roomNumberSave.current != "No Password") {
-            stompClient.send("/app/chat", {}, JSON.stringify(roomNumberSave.current + "Admin: Thank you, your message has been sent to the developer"));}
+            stompClient.send("/app/chat", {}, JSON.stringify(roomNumberSave.current + "Admin: Thank you, your message has been sent to the developer"));
+        }
         else {
-        stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Thank you, your message has been sent to the developer"));}
+            stompClient.send("/app/globalChat", {}, JSON.stringify("Admin: Thank you, your message has been sent to the developer"));
+        }
         setBugReport(0);
         setBugReportInput("");
     }
@@ -542,110 +583,110 @@ function GameBoard() {
     // Bug report entry
     const bugReportingRender = () => {
         return (
-        <div className="bugReportPageFade">
-            <div className="bugReportOuter">
-                <div className="bugReport">
-                    <div className="cancelBox">
-                        <button className="button" onClick={bugReporting}>X</button>
-                    </div>
-                    <h3>Please write your bug report (or message) in as much detail as possible</h3>
-                    <input 
-                    className="bugReportInputBox" 
-                    name="room" 
-                    value={bugReportInput} 
-                    onChange={(e) => setBugReportInput(e.target.value)}
-                    onKeyDown={handleBugReportEnterPress}
-                    ></input><br />
+            <div className="bugReportPageFade">
+                <div className="bugReportOuter">
+                    <div className="bugReport">
+                        <div className="cancelBox">
+                            <button className="button" onClick={bugReporting}>X</button>
+                        </div>
+                        <h3>Please write your bug report (or message) in as much detail as possible</h3>
+                        <input
+                            className="bugReportInputBox"
+                            name="room"
+                            value={bugReportInput}
+                            onChange={(e) => setBugReportInput(e.target.value)}
+                            onKeyDown={handleBugReportEnterPress}
+                        ></input><br />
                         <button className="button" onClick={sendBugReport}>Send</button>
+                    </div>
                 </div>
             </div>
-        </div>
         )
     }
 
     // Pre-game startup information
     const startUpFlashRender = () => {
         return (
-        <div className="bugReportPageFade">
-            <div className="bugReportOuter">
-                <div className="gameFlash">
-                <h3>Welcome to Solar Fury! A single and multiplayer battleship game with a sci-fi style! <br />
-                    <div className="gameFlashBody">
-                    <br />
-                    To get started, enter a name in the prompt, and then you have the option of either entering a room code if a friend has started a room, creating a new room code or randomly generating one. <br />
-                    <br />
-                    When the code is entered for another persons room you will join them in that game room, alternatively if you are creating the room, simply share the code with the other player. <br />
-                    <br />
-                    If you wish, you can play against the computer by selecting that option, be forewarned however, the computer is no pushover!<br />
-                    <br />
-                    Your username is saved in the database, so you can return and continue playing and leveling up by re-entering that username.
-                    </div>
-                    </h3>
+            <div className="bugReportPageFade">
+                <div className="bugReportOuter">
+                    <div className="gameFlash">
+                        <h3>Welcome to Solar Fury! A single and multiplayer battleship game with a sci-fi style! <br />
+                            <div className="gameFlashBody">
+                                <br />
+                                To get started, enter a name in the prompt, and then you have the option of either entering a room code if a friend has started a room, creating a new room code or randomly generating one. <br />
+                                <br />
+                                When the code is entered for another persons room you will join them in that game room, alternatively if you are creating the room, simply share the code with the other player. <br />
+                                <br />
+                                If you wish, you can play against the computer by selecting that option, be forewarned however, the computer is no pushover!<br />
+                                <br />
+                                Your username is saved in the database, so you can return and continue playing and leveling up by re-entering that username.
+                            </div>
+                        </h3>
                         <button className="button" onClick={startUpFlashScreen}>Ok</button>
+                    </div>
                 </div>
             </div>
-        </div>
         )
     }
 
     // Game start information
     const gameFlashRender = () => {
         return (
-        <div className="bugReportPageFade">
-            <div className="bugReportOuter">
-                <div className="gameFlash">
-                <h3>Time to play! <br />
-                    <div className="gameFlashBody">
-                    <br />
-                    First of all, place your ships by clicking them from the left selection, and then click two spaces on your grid to place them,
-                    the ships will then autocomplete in the direction you clicked, alternatively click "Random Placement" to have the computer place your ships for you.
-                    Once all your ships are placed, click "Ready", once both players are ready the match will begin! <br />
-                    <br />
-                    The first player will be picked randomly, then click on your opponent's board on your turn to shoot at their ships. The first player to destroy all their
-                    opponents' ships will be the winner! And you will gain a level that will be shown on the leaderboard if you are in the top ten! <br />
-                    <br />
-                    You can chat to other players using the chat box at the bottom, if you wish to submit a bug report or leave a message for the developer, click the box on the top left. <br />
-                    <br />
-                    </div>
-                    Good luck! And have fun!
-                    </h3>
+            <div className="bugReportPageFade">
+                <div className="bugReportOuter">
+                    <div className="gameFlash">
+                        <h3>Time to play! <br />
+                            <div className="gameFlashBody">
+                                <br />
+                                First of all, place your ships by clicking them from the left selection, and then click two spaces on your grid to place them,
+                                the ships will then autocomplete in the direction you clicked, alternatively click "Random Placement" to have the computer place your ships for you.
+                                Once all your ships are placed, click "Ready", once both players are ready the match will begin! <br />
+                                <br />
+                                The first player will be picked randomly, then click on your opponent's board on your turn to shoot at their ships. The first player to destroy all their
+                                opponents' ships will be the winner! And you will gain a level that will be shown on the leaderboard if you are in the top ten! <br />
+                                <br />
+                                You can chat to other players using the chat box at the bottom, if you wish to submit a bug report or leave a message for the developer, click the box on the top left. <br />
+                                <br />
+                            </div>
+                            Good luck! And have fun!
+                        </h3>
                         <button className="button" onClick={gameFlashScreen}>Start</button>
+                    </div>
                 </div>
             </div>
-        </div>
         )
     }
 
     // Notify the player another player has used the restart button
     const playerLeftRender = () => {
         return (
-        <div className="bugReportPageFade">
-            <div className="bugReportOuter">
-                <div className="gameFlash">
-                <h3>The other player has left the game, press the restart button below to return to the start screen </h3><br />
+            <div className="bugReportPageFade">
+                <div className="bugReportOuter">
+                    <div className="gameFlash">
+                        <h3>The other player has left the game, press the restart button below to return to the start screen </h3><br />
                         <button className="button" onClick={restart}>Restart</button>
+                    </div>
                 </div>
             </div>
-        </div>
         )
     }
 
     // Displays the games winner
     const gameEndRender = () => {
-    return (
-        <div className="bugReportPageFade">
-            <div className="bugReportOuter">
-                <div className="gameFlash">
-                <h3>{winner} is the winner!<br />
-                    <div className="gameFlashBody">
-                    <br />
-                        {winner} has won the game and gained a rank!
-                        </div>
-                    </h3>
+        return (
+            <div className="bugReportPageFade">
+                <div className="bugReportOuter">
+                    <div className="gameFlash">
+                        <h3>{winner} is the winner!<br />
+                            <div className="gameFlashBody">
+                                <br />
+                                {winner} has won the game and gained a rank!
+                            </div>
+                        </h3>
                         <button className="button" onClick={restart}>Complete game</button>
+                    </div>
                 </div>
             </div>
-        </div>
         )
     }
 
@@ -655,7 +696,7 @@ function GameBoard() {
             startUpFlashScreen()
         }
         else {
-            if (gameFlash === 1){
+            if (gameFlash === 1) {
                 setGameFlash(0);
             } else {
                 setGameFlash(1);
@@ -689,7 +730,7 @@ function GameBoard() {
                     <div>
                         {gameFlash === 1 ? gameFlashRender() : null}
                         {winner != "unknown" ? gameEndRender() : null}
-                        <Grids enemyShipsRemaining={enemyShipsRemaining} gameInfo={gameInfo} turnNumber={turnNumber} playerName={playerName} turn={turn} miss={miss} enemyMiss={enemyMiss} player2Name={player2Name}
+                        <Grids friendlyShipsRemaining={friendlyShipsRemaining} enemyShipsRemaining={enemyShipsRemaining} gameInfo={gameInfo} turnNumber={turnNumber} playerName={playerName} turn={turn} miss={miss} enemyMiss={enemyMiss} player2Name={player2Name}
                             placedShip={placedShip} player1Data={player1Data} setPlacedShip={setPlacedShip}
                             player2Data={player2Data} savedName={savedName} shipInfo={shipInfo}
                             shipDamage={shipDamage} enemyShipDamage={enemyShipDamage}
@@ -702,5 +743,5 @@ function GameBoard() {
                 leaderBoard={leaderBoard} />
         </>
     )
-    }
-    export default GameBoard
+}
+export default GameBoard
